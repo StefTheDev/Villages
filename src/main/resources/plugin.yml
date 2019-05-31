@@ -1,0 +1,11 @@
+name: Villages
+main: com.stefthedev.villages.Villages
+version: ALPHA-1.0 snapshot-2.3-2
+author: StefTheDev
+
+commands:
+  village:
+    description: The village command.
+    aliases:
+      - villages
+      - v
