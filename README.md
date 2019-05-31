@@ -2,7 +2,7 @@
 Villages is a unique and simple land claiming plugin that allows you to group up with members to build on your survival world.
 
 
-###### Features
+## Features
 
 1. Efficient YAML data serialization.
 2. Request system (KICK, DISBAND, INVITE).
@@ -15,7 +15,7 @@ Villages is a unique and simple land claiming plugin that allows you to group up
 9. An effective village management system.
 
 
-###### Configuration
+## Configuration
 
 The configuration files have been formatted into YAML so that it makes it more readable for commercial use.
 We highly recommend to not configure any data in the **villages.yml** file unless you know what you are doing.
@@ -25,7 +25,7 @@ Configuration files:
 - villages.yml (Not Recommended to configure)
 
 
-###### Commands and Permissions
+## Commands and Permissions
 
 Commands are very easy to use in regards to permissions.
 ```
@@ -37,7 +37,7 @@ Examples:
 ```
 
 
-###### Upcoming Features
+## Upcoming Features
 
 Since villages is still in ALPHA we are still working hard on releasing more features to improve the plugin. These are a list of potential upcoming featues:
 - [x] Request System
@@ -46,7 +46,7 @@ Since villages is still in ALPHA we are still working hard on releasing more fea
 - [ ] Flags and Permissions
 
 
-###### Support
+## Support
 
 If you have any issues or concerns in regards to the plugin feel free to message me on these platforms:
 - **Discord:** Stef#0001
