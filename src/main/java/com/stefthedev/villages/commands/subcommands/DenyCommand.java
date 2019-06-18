@@ -14,7 +14,7 @@ public class DenyCommand extends Command {
 
     public DenyCommand(Villages villages) {
         super("deny");
-        villageManager = villages.getVillageManager();
+        this.villageManager = villages.getVillageManager();
     }
 
     @Override

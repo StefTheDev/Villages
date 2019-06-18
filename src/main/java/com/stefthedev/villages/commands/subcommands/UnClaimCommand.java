@@ -14,7 +14,7 @@ public class UnClaimCommand extends Command {
 
     public UnClaimCommand(Villages villages) {
         super("unclaim");
-        villageManager = villages.getVillageManager();
+        this.villageManager = villages.getVillageManager();
     }
 
     @Override

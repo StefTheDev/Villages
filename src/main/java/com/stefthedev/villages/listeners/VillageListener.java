@@ -1,6 +1,8 @@
 package com.stefthedev.villages.listeners;
 
 import com.stefthedev.villages.Villages;
+import com.stefthedev.villages.settings.SettingType;
+import com.stefthedev.villages.settings.SettingsManager;
 import com.stefthedev.villages.utilities.Chat;
 import com.stefthedev.villages.utilities.Message;
 import com.stefthedev.villages.villages.Village;
@@ -10,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Objects;
@@ -18,13 +19,17 @@ import java.util.Objects;
 public class VillageListener implements Listener {
 
     private final VillageManager villageManager;
+    private final SettingsManager settingsManager;
 
     public VillageListener(Villages villages) {
         this.villageManager = villages.getVillageManager();
+        this.settingsManager = villages.getSettingsManager();
     }
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
+        if(!(boolean) settingsManager.getSetting(SettingType.TITLE_MESSAGES).getElement()) return;
+
         if(Objects.requireNonNull(event.getTo()).getChunk() != event.getFrom().getChunk()) {
             Village from = villageManager.getVillage(event.getFrom().getChunk());
             Village to = villageManager.getVillage(event.getTo().getChunk());
@@ -61,7 +66,10 @@ public class VillageListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if((boolean) settingsManager.getSetting(SettingType.BLOCK_BREAK).getElement()) return;
+
         Village village = villageManager.getVillage(event.getBlock().getChunk());
+
         if(village != null) {
             if(!village.getMembers().contains(event.getPlayer().getUniqueId())) {
                 event.setCancelled(true);
@@ -71,17 +79,9 @@ public class VillageListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        Village village = villageManager.getVillage(event.getBlock().getChunk());
-        if(village != null) {
-            if(!village.getMembers().contains(event.getPlayer().getUniqueId())) {
-                event.setCancelled(true);
-            }
-        }
-    }
+        if((boolean) settingsManager.getSetting(SettingType.BLOCK_PLACE).getElement()) return;
 
-    @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
-        Village village = villageManager.getVillage(event.getPlayer().getLocation().getChunk());
+        Village village = villageManager.getVillage(event.getBlock().getChunk());
         if(village != null) {
             if(!village.getMembers().contains(event.getPlayer().getUniqueId())) {
                 event.setCancelled(true);

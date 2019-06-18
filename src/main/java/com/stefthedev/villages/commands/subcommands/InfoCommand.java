@@ -17,7 +17,7 @@ public class InfoCommand extends Command {
 
     public InfoCommand(Villages villages) {
         super("info");
-        villageManager = villages.getVillageManager();
+        this.villageManager = villages.getVillageManager();
     }
 
     @Override

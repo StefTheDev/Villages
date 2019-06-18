@@ -2,7 +2,10 @@ package com.stefthedev.villages;
 
 import com.stefthedev.villages.commands.VillageCommand;
 import com.stefthedev.villages.commands.subcommands.*;
+import com.stefthedev.villages.listeners.EntityListener;
+import com.stefthedev.villages.listeners.PlayerListener;
 import com.stefthedev.villages.listeners.VillageListener;
+import com.stefthedev.villages.settings.SettingsManager;
 import com.stefthedev.villages.utilities.Config;
 import com.stefthedev.villages.utilities.Message;
 import com.stefthedev.villages.villages.VillageManager;
@@ -15,10 +18,17 @@ import java.util.Objects;
 public class Villages extends JavaPlugin {
 
     private VillageManager villageManager;
+    private SettingsManager settingsManager;
 
     public void onEnable() {
         Config messageConfig = new Config(this, "messages");
         registerMessages(messageConfig);
+
+        Config settingsConfig = new Config(this, "settings");
+        settingsConfig.setup();
+
+        settingsManager = new SettingsManager(settingsConfig);
+        settingsManager.load();
 
         Config villageConfig = new Config(this, "villages");
         villageConfig.setup();
@@ -40,7 +50,11 @@ public class Villages extends JavaPlugin {
         );
 
         Objects.requireNonNull(getCommand(villageCommand.toString())).setExecutor(villageCommand);
-        registerListeners(new VillageListener(this));
+        registerListeners(
+                new EntityListener(this),
+                new PlayerListener(this),
+                new VillageListener(this)
+        );
     }
 
     private void registerListeners(Listener... listeners) {
@@ -68,5 +82,9 @@ public class Villages extends JavaPlugin {
 
     public VillageManager getVillageManager() {
         return villageManager;
+    }
+
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
     }
 }

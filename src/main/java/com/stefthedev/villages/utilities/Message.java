@@ -5,8 +5,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.Arrays;
 import java.util.List;
 
-public enum  Message {
+public enum Message {
     CLAIM("claim", "You have successfully claimed new land for your village."),
+    CLAIM_LIMIT("claim-limit", "You cannot claim more than &b{0} &7lands."),
     CLAIMED("claimed", "You have already claimed this land."),
     CLAIMED_OTHER("claimed-other", "This land has already been claimed by another village."),
     CREATE("create", "&b{0} &7has established a new village named &a&l{1}!"),

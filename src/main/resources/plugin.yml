@@ -1,6 +1,6 @@
 name: Villages
 main: com.stefthedev.villages.Villages
-version: ALPHA-1.0 snapshot-2.3-2
+version: ALPHA-1.0
 author: StefTheDev
 
 commands:

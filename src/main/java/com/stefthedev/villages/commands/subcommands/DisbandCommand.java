@@ -15,7 +15,7 @@ public class DisbandCommand extends Command {
 
     public DisbandCommand(Villages villages) {
         super("disband");
-        villageManager = villages.getVillageManager();
+        this.villageManager = villages.getVillageManager();
     }
 
     @Override
