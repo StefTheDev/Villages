@@ -41,6 +41,7 @@ Examples:
 
 Since villages is still in ALPHA we are still working hard on releasing more features to improve the plugin. These are a list of potential upcoming featues:
 - [x] Request System
+- [X] General Settings
 - [ ] Role System
 - [ ] Resources management (Special Feature)
 - [ ] Flags and Permissions
