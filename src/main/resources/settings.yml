@@ -1,7 +1,0 @@
-block-break: false
-block-place: false
-chest-access: false
-chunk-limit: 10
-explosions: false
-damage-players: false
-title-messages: true

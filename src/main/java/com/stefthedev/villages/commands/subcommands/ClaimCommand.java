@@ -47,8 +47,10 @@ public class ClaimCommand extends Command {
 
                 try {
                     if(new WorldGuardHook().isRegion(player)) {
-                        player.sendMessage(Chat.format(Message.WORLDGUARD_CLAIM.toString()));
-                        return true;
+                        if((boolean) settingsManager.getSetting(SettingType.WORLDGUARD_CHECK).getElement()) {
+                            player.sendMessage(Chat.format(Message.WORLDGUARD_CLAIM.toString()));
+                            return true;
+                        }
                     }
                 } catch (NoClassDefFoundError ignored) {
 

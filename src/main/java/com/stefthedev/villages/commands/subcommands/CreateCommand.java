@@ -2,6 +2,8 @@ package com.stefthedev.villages.commands.subcommands;
 
 import com.stefthedev.villages.Villages;
 import com.stefthedev.villages.hooks.WorldGuardHook;
+import com.stefthedev.villages.settings.SettingType;
+import com.stefthedev.villages.settings.SettingsManager;
 import com.stefthedev.villages.utilities.Chat;
 import com.stefthedev.villages.utilities.Command;
 import com.stefthedev.villages.utilities.Message;
@@ -16,10 +18,12 @@ import org.bukkit.entity.Player;
 public class CreateCommand extends Command {
 
     private final VillageManager villageManager;
+    private final SettingsManager settingsManager;
 
     public CreateCommand(Villages villages) {
         super("create");
         villageManager = villages.getVillageManager();
+        settingsManager = villages.getSettingsManager();
     }
 
     @Override
@@ -38,7 +42,10 @@ public class CreateCommand extends Command {
 
                 try {
                     if(new WorldGuardHook().isRegion(player)) {
-                        player.sendMessage(Chat.format(Message.WORLDGUARD_CREATE.toString()));
+                        if((boolean) settingsManager.getSetting(SettingType.WORLDGUARD_CHECK).getElement()) {
+                            player.sendMessage(Chat.format(Message.WORLDGUARD_CREATE.toString()));
+                            return true;
+                        }
                         return true;
                     }
                 } catch (NoClassDefFoundError ignored) {

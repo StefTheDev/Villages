@@ -3,10 +3,10 @@ package com.stefthedev.villages;
 import com.stefthedev.villages.commands.VillageCommand;
 import com.stefthedev.villages.commands.subcommands.*;
 import com.stefthedev.villages.hooks.PlaceholderAPIHook;
-import com.stefthedev.villages.hooks.WorldGuardHook;
 import com.stefthedev.villages.listeners.EntityListener;
 import com.stefthedev.villages.listeners.PlayerListener;
 import com.stefthedev.villages.listeners.VillageListener;
+import com.stefthedev.villages.settings.SettingType;
 import com.stefthedev.villages.settings.SettingsManager;
 import com.stefthedev.villages.utilities.Config;
 import com.stefthedev.villages.utilities.Message;
@@ -29,7 +29,7 @@ public class Villages extends JavaPlugin {
         registerMessages(messageConfig);
 
         Config settingsConfig = new Config(this, "settings");
-        settingsConfig.setup();
+        registerSettings(settingsConfig);
 
         settingsManager = new SettingsManager(settingsConfig);
         settingsManager.load();
@@ -82,10 +82,24 @@ public class Villages extends JavaPlugin {
         config.save();
     }
 
+    private void registerSettings(Config config) {
+        config.setup();
+        for(SettingType settingType: SettingType.values()) {
+            if (config.getFileConfiguration().getString(settingType.toString()) == null) {
+                config.getFileConfiguration().set(settingType.toString(), settingType.getObject());
+            }
+        }
+        config.save();
+    }
+
     private void registerHooks() {
         if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             getLogger().info("Successfully hooked into PlaceholderAPI.");
             new PlaceholderAPIHook(this).register();
+        }
+
+        if(getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            getLogger().info("Successfully hooked into WorldGuard.");
         }
     }
 
