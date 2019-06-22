@@ -1,6 +1,7 @@
 package com.stefthedev.villages.commands.subcommands;
 
 import com.stefthedev.villages.Villages;
+import com.stefthedev.villages.hooks.WorldGuardHook;
 import com.stefthedev.villages.settings.SettingType;
 import com.stefthedev.villages.settings.SettingsManager;
 import com.stefthedev.villages.utilities.Chat;
@@ -43,6 +44,16 @@ public class ClaimCommand extends Command {
             } else if(village.getVillageClaims().size() >= chunkLimit) {
                 player.sendMessage(Chat.format(Message.CLAIM_LIMIT.toString().replace("{0}", String.valueOf(chunkLimit))));
             } else {
+
+                try {
+                    if(new WorldGuardHook().isRegion(player)) {
+                        player.sendMessage(Chat.format(Message.WORLDGUARD_CLAIM.toString()));
+                        return true;
+                    }
+                } catch (NoClassDefFoundError ignored) {
+
+                }
+
                 Chunk chunk = player.getLocation().getChunk();
                 World world = chunk.getWorld();
                 VillageClaim villageClaim = new VillageClaim(Objects.requireNonNull(world).getName(), chunk.getX(), chunk.getZ());

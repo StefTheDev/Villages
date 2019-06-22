@@ -2,6 +2,8 @@ package com.stefthedev.villages;
 
 import com.stefthedev.villages.commands.VillageCommand;
 import com.stefthedev.villages.commands.subcommands.*;
+import com.stefthedev.villages.hooks.PlaceholderAPIHook;
+import com.stefthedev.villages.hooks.WorldGuardHook;
 import com.stefthedev.villages.listeners.EntityListener;
 import com.stefthedev.villages.listeners.PlayerListener;
 import com.stefthedev.villages.listeners.VillageListener;
@@ -17,10 +19,12 @@ import java.util.Objects;
 
 public class Villages extends JavaPlugin {
 
+    //Managers
     private VillageManager villageManager;
     private SettingsManager settingsManager;
 
     public void onEnable() {
+
         Config messageConfig = new Config(this, "messages");
         registerMessages(messageConfig);
 
@@ -55,6 +59,8 @@ public class Villages extends JavaPlugin {
                 new PlayerListener(this),
                 new VillageListener(this)
         );
+
+        registerHooks();
     }
 
     private void registerListeners(Listener... listeners) {
@@ -74,6 +80,13 @@ public class Villages extends JavaPlugin {
             }
         }
         config.save();
+    }
+
+    private void registerHooks() {
+        if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            getLogger().info("Successfully hooked into PlaceholderAPI.");
+            new PlaceholderAPIHook(this).register();
+        }
     }
 
     public void onDisable() {

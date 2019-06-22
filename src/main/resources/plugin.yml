@@ -1,7 +1,9 @@
 name: Villages
 main: com.stefthedev.villages.Villages
-version: ALPHA-1.0
+version: BETA-3.0
 author: StefTheDev
+
+softdepend: [PlaceholderAPI, WorldGuard]
 
 commands:
   village:

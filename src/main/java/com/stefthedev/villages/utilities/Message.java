@@ -19,7 +19,7 @@ public enum Message {
             "",
             "&7Owner: &b{1}",
             "&7Members: &b{2}",
-            "&7Claims: &b{3}"
+            "&7Claims: &b{3}&3/&b{4}"
     )),
     HELP("help", "&e&lVillages: &7Version {0}"),
     HELP_ITEM("help-item", "  &7- {0}"),
@@ -56,7 +56,9 @@ public enum Message {
     TOOLTIP("tooltip", "&7Click to select."),
     UNCLAIM("unclaim", "You have unclaimed land from your village"),
     UNCLAIM_OTHER("unclaim-other", "You can't unclaim this land as it does not belong to your village."),
-    USAGE("usage", "Usage: &b/village {0}");
+    USAGE("usage", "Usage: &b/village {0}"),
+    WORLDGUARD_CREATE("worldguard-create", "You are not able to establish a village as you are in a worldguard region"),
+    WORLDGUARD_CLAIM("worldguard-claim", "You are not able to claim land as you are in a worldguard region");
 
     private String path, def;
     private List<String> list;
