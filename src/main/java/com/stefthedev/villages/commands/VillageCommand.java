@@ -1,9 +1,10 @@
 package com.stefthedev.villages.commands;
 
 import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.utilities.Chat;
-import com.stefthedev.villages.utilities.Command;
-import com.stefthedev.villages.utilities.Message;
+import com.stefthedev.villages.commands.subcommands.HelpCommand;
+import com.stefthedev.villages.utilities.general.Chat;
+import com.stefthedev.villages.utilities.general.Command;
+import com.stefthedev.villages.utilities.general.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class VillageCommand extends Command implements TabCompleter {
     private Set<Command> commands;
 
     public VillageCommand(Villages villages) {
-        super("village");
+        super("village", "");
         this.villages = villages;
         this.commands = new HashSet<>();
     }
@@ -31,10 +32,7 @@ public class VillageCommand extends Command implements TabCompleter {
                 }
             });
         } else {
-            player.sendMessage(Chat.color(Message.HELP.toString().replace("{0}", villages.getDescription().getVersion())));
-            commands.forEach(command -> player.sendMessage(
-                    Message.HELP_ITEM.toString().replace("{0}", command.toString())
-            ));
+            return new HelpCommand(this).run(player, args);
         }
         return false;
     }

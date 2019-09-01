@@ -1,9 +1,8 @@
 package com.stefthedev.villages.commands.subcommands;
 
-import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.utilities.Chat;
-import com.stefthedev.villages.utilities.Command;
-import com.stefthedev.villages.utilities.Message;
+import com.stefthedev.villages.utilities.general.Chat;
+import com.stefthedev.villages.utilities.general.Command;
+import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.villages.VillageManager;
 import com.stefthedev.villages.villages.VillageRequest;
 import org.bukkit.entity.Player;
@@ -12,9 +11,9 @@ public class AcceptCommand extends Command {
 
     private final VillageManager villageManager;
 
-    public AcceptCommand(Villages villages) {
-        super("accept");
-        villageManager = villages.getVillageManager();
+    public AcceptCommand(VillageManager villageManager) {
+        super("accept", "accept");
+        this.villageManager = villageManager;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class AcceptCommand extends Command {
             player.sendMessage(Chat.format(Message.REQUEST_NULL.toString()));
         } else {
             villageRequest.complete(villageManager);
-            villageManager.remove(villageRequest);
+            villageManager.getRequests().remove(villageRequest);
         }
         return false;
     }

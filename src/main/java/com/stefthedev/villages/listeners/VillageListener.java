@@ -1,13 +1,13 @@
 package com.stefthedev.villages.listeners;
 
 import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.settings.SettingType;
-import com.stefthedev.villages.settings.SettingsManager;
-import com.stefthedev.villages.utilities.Chat;
-import com.stefthedev.villages.utilities.Message;
+import com.stefthedev.villages.utilities.general.Chat;
+import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.villages.Village;
 import com.stefthedev.villages.villages.VillageManager;
-import org.bukkit.Bukkit;
+import com.stefthedev.villages.villages.VillagePermission;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -19,17 +19,13 @@ import java.util.Objects;
 public class VillageListener implements Listener {
 
     private final VillageManager villageManager;
-    private final SettingsManager settingsManager;
 
     public VillageListener(Villages villages) {
         this.villageManager = villages.getVillageManager();
-        this.settingsManager = villages.getSettingsManager();
     }
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if(!(boolean) settingsManager.getSetting(SettingType.TITLE_MESSAGES).getElement()) return;
-
         if(Objects.requireNonNull(event.getTo()).getChunk() != event.getFrom().getChunk()) {
             Village from = villageManager.getVillage(event.getFrom().getChunk());
             Village to = villageManager.getVillage(event.getTo().getChunk());
@@ -39,8 +35,8 @@ public class VillageListener implements Listener {
 
             if (from == null && to != null) {
                 event.getPlayer().sendTitle(
-                        Chat.color(Message.TITLE_HEADER.toString().replace("{0}", to.toString())),
-                        Chat.color(Message.TITLE_FOOTER.toString().replace("{0}", Objects.requireNonNull(Bukkit.getOfflinePlayer(to.getOwner()).getName()))),
+                        Chat.color(Message.TITLE_HEADER.toString().replace("{0}", to.getName())),
+                        Chat.color("&7" + to.getDescription()),
                         10, 30, 10
                 );
                 return;
@@ -56,8 +52,8 @@ public class VillageListener implements Listener {
 
             if (to != null && to != from) {
                 event.getPlayer().sendTitle(
-                        Chat.color(Message.TITLE_HEADER.toString().replace("{0}", to.toString())),
-                        Chat.color(Message.TITLE_FOOTER.toString().replace("{0}", Objects.requireNonNull(Bukkit.getOfflinePlayer(to.getOwner()).getName()))),
+                        Chat.color(Message.TITLE_HEADER.toString().replace("{0}", to.getName())),
+                        Chat.color("&7" + to.getDescription()),
                         10, 30, 10
                 );
             }
@@ -66,26 +62,37 @@ public class VillageListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if((boolean) settingsManager.getSetting(SettingType.BLOCK_BREAK).getElement()) return;
+        Player player = event.getPlayer();
+        Block block = event.getBlock();
 
-        Village village = villageManager.getVillage(event.getBlock().getChunk());
+        Village currentVillage = villageManager.getVillage(block.getChunk());
+        if (currentVillage == null) return;
 
-        if(village != null) {
-            if(!village.getMembers().contains(event.getPlayer().getUniqueId())) {
-                event.setCancelled(true);
-            }
+        Village playerVillager = villageManager.getVillage(player);
+
+        if (playerVillager == currentVillage) {
+            if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BLOCK_BREAK) &&
+                    !playerVillager.getOwner().equals(player.getUniqueId())) event.setCancelled(true);
+        } else {
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if((boolean) settingsManager.getSetting(SettingType.BLOCK_PLACE).getElement()) return;
+        Player player = event.getPlayer();
+        Block block = event.getBlock();
 
-        Village village = villageManager.getVillage(event.getBlock().getChunk());
-        if(village != null) {
-            if(!village.getMembers().contains(event.getPlayer().getUniqueId())) {
-                event.setCancelled(true);
-            }
+        Village currentVillage = villageManager.getVillage(block.getChunk());
+        if (currentVillage == null) return;
+
+        Village playerVillager = villageManager.getVillage(player);
+
+        if (playerVillager == currentVillage) {
+            if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BLOCK_PLACE) &&
+                    !playerVillager.getOwner().equals(player.getUniqueId())) event.setCancelled(true);
+        } else {
+            event.setCancelled(true);
         }
     }
 }

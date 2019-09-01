@@ -1,7 +1,8 @@
 name: Villages
 main: com.stefthedev.villages.Villages
-version: BETA-3.0
+version: BETA-4.2
 author: StefTheDev
+api-version: 1.13
 
 softdepend: [PlaceholderAPI, WorldGuard]
 

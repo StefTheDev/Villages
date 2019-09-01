@@ -1,58 +1,59 @@
 package com.stefthedev.villages.commands.subcommands;
 
-import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.utilities.Chat;
-import com.stefthedev.villages.utilities.Command;
-import com.stefthedev.villages.utilities.Message;
-import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
-import com.stefthedev.villages.villages.VillageRequest;
+import com.stefthedev.villages.utilities.general.Chat;
+import com.stefthedev.villages.utilities.general.Command;
+import com.stefthedev.villages.utilities.general.Message;
+import com.stefthedev.villages.villages.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class InviteCommand extends Command {
 
-    private final Villages villages;
     private final VillageManager villageManager;
 
-    public InviteCommand(Villages villages) {
-        super("invite");
-        this.villages = villages;
-        this.villageManager = villages.getVillageManager();
+    public InviteCommand(VillageManager villageManager) {
+        super("invite", "invite [player]");
+        this.villageManager = villageManager;
     }
 
     @Override
     public boolean run(Player player, String[] args) {
-        if(args.length == 2) {
-            Player target = villages.getServer().getPlayer(args[1]);
-            if(target == null) {
-                player.sendMessage(Chat.format(Message.PLAYER_OFFLINE.toString()));
-            } else {
-                Village village = villageManager.getVillage(player);
-                if(village == null) {
-                    player.sendMessage(Chat.format(Message.PLAYER_FALSE.toString()));
-                    return true;
-                }
-                VillageRequest villageRequest = villageManager.getRequest(player);
-                if(villageRequest != null) {
-                    player.sendMessage(Chat.format(Message.REQUEST_PENDING_TARGET.toString()).replace("{0}", target.getName()));
-                    return true;
-                }
-                if(village.getOwner().equals(player.getUniqueId())) {
-                    Village targetVillage = villageManager.getVillage(target);
-                    if(targetVillage != null) {
-                        player.sendMessage(Chat.format(Message.TARGET_TRUE.toString().replace("{0}", target.getName())));
+        if (args.length == 2) {
+            Village village = villageManager.getVillage(player);
+            if (village != null) {
+                VillageMember villageMember = village.getMember(player.getUniqueId());
+                if (villageMember.hasPermission(VillagePermission.INVITE_MEMBER) || village.getOwner().equals(player.getUniqueId())) {
+                    VillageRequest villageRequest = villageManager.getRequest(player);
+                    if (villageRequest == null) {
+                        Player target = Bukkit.getPlayer(args[1]);
+                        if (target != player) {
+                            if (target != null) {
+                                Village targetVillage = villageManager.getVillage(target);
+                                    if (targetVillage == null) {
+                                    villageRequest = new VillageRequest(village, player.getUniqueId(), target.getUniqueId(), VillageRequest.VillageRequestAction.INVITE);
+                                    villageRequest.send();
+                                    villageManager.getRequests().add(villageRequest);
+                                } else {
+                                    player.sendMessage("Target already belongs to a village.");
+                                }
+                            } else {
+                                player.sendMessage(Chat.format(Message.PLAYER_OFFLINE.toString().replace("{0}", args[1])));
+                            }
+                        } else {
+                            player.sendMessage("You can't invite yourself.");
+                        }
                     } else {
-                        villageRequest = new VillageRequest(village, player.getUniqueId(), target.getUniqueId(), VillageRequest.VillageRequestAction.INVITE);
-                        villageRequest.send();
-                        villageManager.add(villageRequest);
+                        player.sendMessage(Chat.format(Message.REQUEST_PENDING.toString()));
                     }
                 } else {
-                    player.sendMessage(Chat.format(Message.OWNER_INVITE.toString()));
+                    player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.INVITE_MEMBER.name())));
                 }
+            } else {
+                player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));
             }
         } else {
-            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "invite [player]")));
+            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village" + getUsage())));
         }
-        return false;
+        return true;
     }
 }

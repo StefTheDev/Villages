@@ -1,6 +1,6 @@
 package com.stefthedev.villages.villages;
 
-import org.bukkit.Chunk;
+import org.bukkit.Location;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,61 +10,90 @@ import java.util.UUID;
 public class Village {
 
     private final String name;
-    private final UUID owner;
 
-    private final Set<UUID> members;
+    private String description;
+    private UUID owner;
+
+    private final Set<VillageMember> villageMembers;
     private final Set<VillageClaim> villageClaims;
 
-    public Village(String name, UUID owner) {
+    private VillageLocation villageLocation;
+
+    public Village(String name, String description, UUID owner) {
         this.name = name;
+        this.description = description;
         this.owner = owner;
-        this.members = new HashSet<>();
-        villageClaims = new HashSet<>();
+
+        this.villageMembers = new HashSet<>();
+        this.villageClaims = new HashSet<>();
+    }
+
+    public void add(VillageMember villageMember) {
+        villageMembers.add(villageMember);
     }
 
     public void add(VillageClaim villageClaim) {
-        this.villageClaims.add(villageClaim);
+        villageClaims.add(villageClaim);
     }
 
-    void add(UUID uuid) {
-        this.members.add(uuid);
+    public void remove(VillageMember villageMember) {
+        villageMembers.remove(villageMember);
     }
 
     public void remove(VillageClaim villageClaim) {
-        this.villageClaims.remove(villageClaim);
+        villageClaims.remove(villageClaim);
     }
 
-    void remove(UUID uuid) {
-        this.members.remove(uuid);
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    VillageClaim get(Chunk chunk) {
-        for (VillageClaim villageClaim : villageClaims) {
-            if (villageClaim.getX() == chunk.getX() &&
-                    villageClaim.getZ() == chunk.getZ() &&
-                    villageClaim.getWorld().equalsIgnoreCase(chunk.getWorld().getName())) {
-                return villageClaim;
+    public void setOwner(UUID owner) {
+        this.owner = owner;
+    }
+
+    public void setLocation(Location location) {
+        this.villageLocation = new VillageLocation(
+                location.getX(),
+                location.getY(),
+                location.getZ(),
+                location.getYaw(),
+                location.getPitch(),
+                location.getWorld().getName()
+        );
+    }
+
+    public VillageMember getMember(UUID uuid) {
+        for(VillageMember villageMember : villageMembers) {
+            if(villageMember.getUniqueId().equals(uuid)) {
+                return villageMember;
             }
         }
         return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        if(description == null)  description = "A peaceful settlement.";
+        return description;
     }
 
     public UUID getOwner() {
         return owner;
     }
 
-    public Set<UUID> getMembers() {
-        Set<UUID> memberSet = members;
-        memberSet.add(owner);
-        return Collections.unmodifiableSet(memberSet);
+    public Set<VillageMember> getVillageMembers() {
+        return Collections.unmodifiableSet(villageMembers);
     }
 
     public Set<VillageClaim> getVillageClaims() {
         return Collections.unmodifiableSet(villageClaims);
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public VillageLocation getVillageLocation() {
+        return villageLocation;
     }
 }

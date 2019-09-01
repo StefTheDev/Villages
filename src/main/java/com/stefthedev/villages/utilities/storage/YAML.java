@@ -1,4 +1,4 @@
-package com.stefthedev.villages.utilities;
+package com.stefthedev.villages.utilities.storage;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class Config {
+public class YAML {
 
     private JavaPlugin javaPlugin;
     private String name;
@@ -17,7 +17,7 @@ public class Config {
     private FileConfiguration fileConfiguration;
     private File file;
 
-    public Config(JavaPlugin javaPlugin, String name) {
+    public YAML(JavaPlugin javaPlugin, String name) {
         this.javaPlugin = javaPlugin;
         this.name = name;
     }

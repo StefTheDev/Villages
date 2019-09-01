@@ -1,7 +1,7 @@
 package com.stefthedev.villages.villages;
 
-import com.stefthedev.villages.utilities.Chat;
-import com.stefthedev.villages.utilities.Message;
+import com.stefthedev.villages.utilities.general.Chat;
+import com.stefthedev.villages.utilities.general.Message;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -53,7 +53,7 @@ public class VillageRequest {
                 Player target = Bukkit.getPlayer(this.target);
                 if(target == null) return;
                 player.sendMessage(Chat.format(Message.REQUEST_INVITE.toString().replace("{0}", target.getName())));
-                target.sendMessage(Chat.format(Message.REQUEST_INVITE_TARGET.toString().replace("{0}", village.toString())));
+                target.sendMessage(Chat.format(Message.REQUEST_INVITE_TARGET.toString().replace("{0}", village.getName())));
                 target.spigot().sendMessage(accept, deny);
             } break;
             case KICK: {
@@ -66,32 +66,20 @@ public class VillageRequest {
     public void complete(VillageManager villageManager) {
         switch (villageRequestAction) {
             case DISBAND: {
-                Bukkit.broadcastMessage(Chat.format(Message.DISBAND.toString().replace("{0}", village.toString())));
+                Bukkit.broadcastMessage(Chat.format(Message.DISBAND.toString().replace("{0}", village.getName())));
                 villageManager.remove(village);
             } break;
             case INVITE: {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target);
-                village.getMembers().forEach(member -> {
-                    Player player = Bukkit.getPlayer(member);
-                    if(player != null) {
-                        String name = offlinePlayer.getName();
-                        player.sendMessage(Chat.format(Message.REQUEST_JOIN.toString().replace("{0}", Objects.requireNonNull(name))));
-                    }
-                });
                 Player player = offlinePlayer.getPlayer();
-                if(player != null) player.sendMessage(Chat.format(Message.REQUEST_JOIN_TARGET.toString().replace("{0}", village.toString())));
-                village.add(target);
+                if(player != null) player.sendMessage(Chat.format(Message.REQUEST_JOIN_TARGET.toString().replace("{0}", village.getName())));
+                village.add(new VillageMember(target));
             } break;
             case KICK: {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target);
-                village.getMembers().forEach(member -> {
-                    Player player = Bukkit.getPlayer(member);
-                    String name = offlinePlayer.getName();
-                    if(player != null) player.sendMessage(Chat.format(Message.REQUEST_KICK_MEMBER.toString().replace("{0}", name)));
-                });
                 Player player = offlinePlayer.getPlayer();
-                if(player != null)  player.sendMessage(Chat.format(Message.REQUEST_KICK_TARGET.toString().replace("{0}", village.toString())));
-                village.remove(target);
+                if(player != null)  player.sendMessage(Chat.format(Message.REQUEST_KICK_TARGET.toString().replace("{0}", village.getName())));
+                //village.remove(villageManager.)
             } break;
         }
     }

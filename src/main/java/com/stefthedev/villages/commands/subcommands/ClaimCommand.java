@@ -1,69 +1,44 @@
 package com.stefthedev.villages.commands.subcommands;
 
-import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.hooks.WorldGuardHook;
-import com.stefthedev.villages.settings.SettingType;
-import com.stefthedev.villages.settings.SettingsManager;
-import com.stefthedev.villages.utilities.Chat;
-import com.stefthedev.villages.utilities.Command;
-import com.stefthedev.villages.utilities.Message;
-import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageClaim;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.utilities.general.Chat;
+import com.stefthedev.villages.utilities.general.Command;
+import com.stefthedev.villages.utilities.general.Message;
+import com.stefthedev.villages.villages.*;
 
 import org.bukkit.Chunk;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.Objects;
 
 public class ClaimCommand extends Command {
 
     private final VillageManager villageManager;
-    private final SettingsManager settingsManager;
 
-    public ClaimCommand(Villages villages) {
-        super("claim");
-        this.villageManager = villages.getVillageManager();
-        this.settingsManager = villages.getSettingsManager();
+    public ClaimCommand(VillageManager villageManager) {
+        super("claim", "claim");
+        this.villageManager = villageManager;
     }
 
     @Override
     public boolean run(Player player, String[] args) {
         Village village = villageManager.getVillage(player);
-        if(village == null) {
-            player.sendMessage(Chat.format(Message.PLAYER_FALSE.toString()));
-        } else {
-            int chunkLimit = (int)settingsManager.getSetting(SettingType.CHUNK_LIMIT).getElement();
-            if(!village.getOwner().equals(player.getUniqueId())) {
-                player.sendMessage(Chat.format(Message.OWNER_CLAIM.toString()));
-            } else if(village.getVillageClaims().contains(villageManager.getClaim(player.getLocation().getChunk()))) {
-                player.sendMessage(Chat.format(Message.CLAIMED.toString()));
-            } else if(villageManager.getClaim(player.getLocation().getChunk()) != null) {
-                player.sendMessage(Chat.format(Message.CLAIMED_OTHER.toString()));
-            } else if(village.getVillageClaims().size() >= chunkLimit) {
-                player.sendMessage(Chat.format(Message.CLAIM_LIMIT.toString().replace("{0}", String.valueOf(chunkLimit))));
-            } else {
-
-                try {
-                    if(new WorldGuardHook().isRegion(player)) {
-                        if((boolean) settingsManager.getSetting(SettingType.WORLDGUARD_CHECK).getElement()) {
-                            player.sendMessage(Chat.format(Message.WORLDGUARD_CLAIM.toString()));
-                            return true;
-                        }
-                    }
-                } catch (NoClassDefFoundError ignored) {
-
-                }
-
+        if(village != null) {
+            VillageMember villageMember = village.getMember(player.getUniqueId());
+            if(villageMember.hasPermission(VillagePermission.CLAIM_LAND) || village.getOwner().equals(player.getUniqueId())) {
                 Chunk chunk = player.getLocation().getChunk();
-                World world = chunk.getWorld();
-                VillageClaim villageClaim = new VillageClaim(Objects.requireNonNull(world).getName(), chunk.getX(), chunk.getZ());
-                village.add(villageClaim);
-
-                player.sendMessage(Chat.format(Message.CLAIM.toString()));
+                Village tempVillage = villageManager.getVillage(chunk);
+                if(tempVillage == null) {
+                    village.add(new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ()));
+                    player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString()));
+                } else if (tempVillage == village) {
+                    player.sendMessage(Chat.format(Message.VILLAGE_CLAIM_OWNED.toString()));
+                } else {
+                    player.sendMessage(Chat.format(Message.VILLAGE_CLAIM_OTHER.toString()));
+                }
+            } else {
+                player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.CLAIM_LAND.name())));
             }
+        } else {
+            player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));
         }
-        return false;
+        return true;
     }
 }

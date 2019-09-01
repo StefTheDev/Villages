@@ -1,63 +1,61 @@
 package com.stefthedev.villages;
 
+import com.google.gson.reflect.TypeToken;
 import com.stefthedev.villages.commands.VillageCommand;
 import com.stefthedev.villages.commands.subcommands.*;
 import com.stefthedev.villages.hooks.PlaceholderAPIHook;
 import com.stefthedev.villages.listeners.EntityListener;
 import com.stefthedev.villages.listeners.PlayerListener;
 import com.stefthedev.villages.listeners.VillageListener;
-import com.stefthedev.villages.settings.SettingType;
-import com.stefthedev.villages.settings.SettingsManager;
-import com.stefthedev.villages.utilities.Config;
-import com.stefthedev.villages.utilities.Message;
+import com.stefthedev.villages.listeners.WorldListener;
+import com.stefthedev.villages.utilities.general.Message;
+import com.stefthedev.villages.utilities.storage.YAML;
+import com.stefthedev.villages.villages.Village;
 import com.stefthedev.villages.villages.VillageManager;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 
 public class Villages extends JavaPlugin {
 
-    //Managers
     private VillageManager villageManager;
-    private SettingsManager settingsManager;
 
     public void onEnable() {
 
-        Config messageConfig = new Config(this, "messages");
-        registerMessages(messageConfig);
+        YAML messageYaml = new YAML(this, "messages");
+        registerMessages(messageYaml);
 
-        Config settingsConfig = new Config(this, "settings");
-        registerSettings(settingsConfig);
-
-        settingsManager = new SettingsManager(settingsConfig);
-        settingsManager.load();
-
-        Config villageConfig = new Config(this, "villages");
-        villageConfig.setup();
-
-        villageManager = new VillageManager(villageConfig);
-        villageManager.load();
+        villageManager = new VillageManager(this);
+        villageManager.load(new TypeToken<Set<Village>>(){}.getType());
 
         VillageCommand villageCommand = new VillageCommand(this);
         villageCommand.initialise(
-                new AcceptCommand(this),
-                new ClaimCommand(this),
-                new CreateCommand(this),
-                new DenyCommand(this),
-                new DisbandCommand(this),
-                new InfoCommand(this),
-                new InviteCommand(this),
-                new KickCommand(this),
-                new UnClaimCommand(this)
+                new AcceptCommand(villageManager),
+                new ClaimCommand(villageManager),
+                new CreateCommand(villageManager),
+                new DenyCommand(villageManager),
+                new DisbandCommand(villageManager),
+                new HelpCommand(villageCommand),
+                new HomeCommand(this),
+                new InviteCommand(villageManager),
+                new KickCommand(villageManager),
+                new LeaveCommand(villageManager),
+                new PermissionsCommand(this),
+                new SetDescriptionCommand(villageManager),
+                new SetHomeCommand(villageManager),
+                new SetOwnerCommand( villageManager),
+                new UnClaimCommand(villageManager)
         );
 
         Objects.requireNonNull(getCommand(villageCommand.toString())).setExecutor(villageCommand);
         registerListeners(
                 new EntityListener(this),
                 new PlayerListener(this),
-                new VillageListener(this)
+                new VillageListener(this),
+                new WorldListener(villageManager)
         );
 
         registerHooks();
@@ -67,30 +65,21 @@ public class Villages extends JavaPlugin {
         Arrays.asList(listeners).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
-    private void registerMessages(Config config) {
-        config.setup();
-        Message.setConfiguration(config.getFileConfiguration());
+    private void registerMessages(YAML yaml) {
+        yaml.setup();
+        Message.setConfiguration(yaml.getFileConfiguration());
         for(Message message: Message.values()) {
-            if (config.getFileConfiguration().getString(message.getPath()) == null) {
+            if (yaml.getFileConfiguration().getString(message.getPath()) == null) {
                 if(message.getList() != null) {
-                    config.getFileConfiguration().set(message.getPath(), message.getList());
+                    yaml.getFileConfiguration().set(message.getPath(), message.getList());
                 } else {
-                    config.getFileConfiguration().set(message.getPath(), message.getDef());
+                    yaml.getFileConfiguration().set(message.getPath(), message.getDef());
                 }
             }
         }
-        config.save();
+        yaml.save();
     }
 
-    private void registerSettings(Config config) {
-        config.setup();
-        for(SettingType settingType: SettingType.values()) {
-            if (config.getFileConfiguration().getString(settingType.toString()) == null) {
-                config.getFileConfiguration().set(settingType.toString(), settingType.getObject());
-            }
-        }
-        config.save();
-    }
 
     private void registerHooks() {
         if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -109,9 +98,5 @@ public class Villages extends JavaPlugin {
 
     public VillageManager getVillageManager() {
         return villageManager;
-    }
-
-    public SettingsManager getSettingsManager() {
-        return settingsManager;
     }
 }
