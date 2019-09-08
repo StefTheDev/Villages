@@ -23,7 +23,7 @@ public class AcceptCommand extends Command {
             player.sendMessage(Chat.format(Message.REQUEST_NULL.toString()));
         } else {
             villageRequest.complete(villageManager);
-            villageManager.getRequests().remove(villageRequest);
+            villageManager.remove(villageRequest);
         }
         return false;
     }

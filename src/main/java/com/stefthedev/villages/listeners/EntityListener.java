@@ -3,6 +3,7 @@ package com.stefthedev.villages.listeners;
 import com.stefthedev.villages.Villages;
 import com.stefthedev.villages.villages.Village;
 import com.stefthedev.villages.villages.VillageManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -24,7 +25,9 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
-        Village village = villageManager.getVillage(event.getEntity().getLocation().getChunk());
-        if (village != null) event.setCancelled(true);
+        if(event.getEntity() instanceof Player) {
+            Village village = villageManager.getVillage(event.getEntity().getLocation().getChunk());
+            if (village != null) event.setCancelled(true);
+        }
     }
 }

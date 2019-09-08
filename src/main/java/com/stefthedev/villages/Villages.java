@@ -43,7 +43,7 @@ public class Villages extends JavaPlugin {
                 new InviteCommand(villageManager),
                 new KickCommand(villageManager),
                 new LeaveCommand(villageManager),
-                new PermissionsCommand(this),
+                new PanelCommand(this),
                 new SetDescriptionCommand(villageManager),
                 new SetHomeCommand(villageManager),
                 new SetOwnerCommand( villageManager),

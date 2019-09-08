@@ -27,7 +27,6 @@ public class JSON<T> {
 
             fileWriter.write(gson.toJson(ts));
             fileWriter.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,13 +35,10 @@ public class JSON<T> {
     public Set<T> read(Type type) {
         if (!this.file.exists()) this.file.getParentFile().mkdirs();
 
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        try (FileReader fileReader = new FileReader(file)) {
+            return gson.fromJson(new JsonReader(fileReader), type);
+        } catch (IOException e) {
             return new HashSet<>();
         }
-        return gson.fromJson(new JsonReader(fileReader), type);
     }
 }

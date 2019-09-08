@@ -1,7 +1,9 @@
 package com.stefthedev.villages.villages;
 import com.stefthedev.villages.utilities.general.Manager;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -16,6 +18,14 @@ public class VillageManager extends Manager<Village> {
         super("villages", plugin);
         this.plugin = plugin;
         this.villageRequests = new HashSet<>();
+    }
+
+    public void add(VillageRequest villageRequest) {
+        villageRequests.add(villageRequest);
+    }
+
+    public void remove(VillageRequest villageRequest) {
+        villageRequests.remove(villageRequest);
     }
 
     public Village getVillage(String string) {
@@ -78,6 +88,6 @@ public class VillageManager extends Manager<Village> {
     }
 
     public Set<VillageRequest> getRequests() {
-        return villageRequests;
+        return Collections.unmodifiableSet(villageRequests);
     }
 }

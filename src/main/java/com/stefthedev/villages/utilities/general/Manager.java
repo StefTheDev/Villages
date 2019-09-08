@@ -32,7 +32,7 @@ public class Manager<T> {
         set.remove(t);
     }
 
-    public Set<T> toSet() {
+    protected Set<T> toSet() {
         return Collections.unmodifiableSet(set);
     }
 }

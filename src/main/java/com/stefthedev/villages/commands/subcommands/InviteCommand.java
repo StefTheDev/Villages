@@ -32,7 +32,7 @@ public class InviteCommand extends Command {
                                     if (targetVillage == null) {
                                     villageRequest = new VillageRequest(village, player.getUniqueId(), target.getUniqueId(), VillageRequest.VillageRequestAction.INVITE);
                                     villageRequest.send();
-                                    villageManager.getRequests().add(villageRequest);
+                                    villageManager.add(villageRequest);
                                 } else {
                                     player.sendMessage("Target already belongs to a village.");
                                 }

@@ -8,6 +8,7 @@ import com.stefthedev.villages.villages.VillageClaim;
 import com.stefthedev.villages.villages.VillageManager;
 
 import com.stefthedev.villages.villages.VillageMember;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -32,8 +33,9 @@ public class CreateCommand extends Command {
                     Location location = player.getLocation();
                     if(location.getWorld() == null) return true;
 
+                    Chunk chunk = player.getLocation().getChunk();
                     village = new Village(args[1], "A peaceful settlement.", player.getUniqueId());
-                    village.add(new VillageClaim(location.getWorld().getName(), location.getX(), location.getZ()));
+                    village.add(new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ()));
                     village.add(new VillageMember(player.getUniqueId()));
                     village.setLocation(location);
 

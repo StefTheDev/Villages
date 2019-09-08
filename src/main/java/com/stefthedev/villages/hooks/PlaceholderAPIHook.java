@@ -87,6 +87,6 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
             return String.valueOf(false);
         }
 
-        return null;
+        return "";
     }
 }

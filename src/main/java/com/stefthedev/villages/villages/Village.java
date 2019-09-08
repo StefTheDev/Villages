@@ -2,16 +2,14 @@ package com.stefthedev.villages.villages;
 
 import org.bukkit.Location;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class Village {
 
     private final String name;
 
     private String description;
+    private int level;
     private UUID owner;
 
     private final Set<VillageMember> villageMembers;
@@ -26,6 +24,10 @@ public class Village {
 
         this.villageMembers = new HashSet<>();
         this.villageClaims = new HashSet<>();
+    }
+
+    public void add(int level) {
+        this.level += level;
     }
 
     public void add(VillageMember villageMember) {
@@ -59,7 +61,7 @@ public class Village {
                 location.getZ(),
                 location.getYaw(),
                 location.getPitch(),
-                location.getWorld().getName()
+                Objects.requireNonNull(location.getWorld()).getName()
         );
     }
 
@@ -79,6 +81,10 @@ public class Village {
     public String getDescription() {
         if(description == null)  description = "A peaceful settlement.";
         return description;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public UUID getOwner() {

@@ -4,10 +4,13 @@ import com.stefthedev.villages.utilities.general.Item;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.menus.Menu;
 import com.stefthedev.villages.utilities.menus.MenuItem;
+import com.stefthedev.villages.villages.Village;
+import com.stefthedev.villages.villages.VillageManager;
 import com.stefthedev.villages.villages.VillageMember;
 import com.stefthedev.villages.villages.VillagePermission;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -16,10 +19,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PermissionsMenu extends Menu {
 
+    private final Village village;
+    private final VillageManager villageManager;
     private final VillageMember villageMember;
 
-    public PermissionsMenu(Plugin plugin, OfflinePlayer offlinePlayer, VillageMember villageMember) {
-        super(plugin, offlinePlayer.getName() + "'s Permissions", 27);
+    public PermissionsMenu(Plugin plugin, Village village, VillageManager villageManager, VillageMember villageMember) {
+        super(plugin, Bukkit.getOfflinePlayer(villageMember.getUniqueId()).getName() + "'s Permissions", 36);
+        this.village = village;
+        this.villageManager = villageManager;
         this.villageMember = villageMember;
     }
 
@@ -33,6 +40,11 @@ public class PermissionsMenu extends Menu {
                 addItems(new MenuItem(atomicInteger.addAndGet(1), disabled(villagePermission), event-> villageMember.add(villagePermission)));
             }
         });
+        addItems(new MenuItem(31, back(), inventoryClickEvent ->
+        {
+            inventoryClickEvent.getWhoClicked().closeInventory();
+            new MembersMenu(getPlugin(), villageManager, village, 1).build().open((Player) inventoryClickEvent.getWhoClicked());
+        }));
         return this;
     }
 
@@ -49,6 +61,14 @@ public class PermissionsMenu extends Menu {
                 .material(Material.LIME_DYE)
                 .name(Message.MENU_ENABLED_TITLE.toString().replace("{0}", villagePermission.name()))
                 .lore(Message.MENU_ENABLED_LORE.toList())
+                .build();
+    }
+
+    private ItemStack back() {
+        return new Item()
+                .material(Material.PISTON)
+                .name(Message.MENU_BACK_TITLE.toString())
+                .lore(Message.MENU_BACK_LORE.toList())
                 .build();
     }
 }

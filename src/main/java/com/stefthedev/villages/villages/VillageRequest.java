@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class VillageRequest {
@@ -72,14 +71,21 @@ public class VillageRequest {
             case INVITE: {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target);
                 Player player = offlinePlayer.getPlayer();
-                if(player != null) player.sendMessage(Chat.format(Message.REQUEST_JOIN_TARGET.toString().replace("{0}", village.getName())));
-                village.add(new VillageMember(target));
+                if(player != null) {
+                    player.sendMessage(Chat.format(Message.REQUEST_JOIN_TARGET.toString().replace("{0}", village.getName())));
+                    VillageMember villageMember = new VillageMember(player.getUniqueId());
+                    villageMember.add(VillagePermission.BLOCK_BREAK);
+                    villageMember.add(VillagePermission.BLOCK_PLACE);
+                    villageMember.add(VillagePermission.WATER_PLACEMENT);
+                    villageMember.add(VillagePermission.FURNACE_ACCESS);
+                    villageMember.add(VillagePermission.HOME);
+                    village.add(villageMember);
+                }
             } break;
             case KICK: {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target);
                 Player player = offlinePlayer.getPlayer();
                 if(player != null)  player.sendMessage(Chat.format(Message.REQUEST_KICK_TARGET.toString().replace("{0}", village.getName())));
-                //village.remove(villageManager.)
             } break;
         }
     }

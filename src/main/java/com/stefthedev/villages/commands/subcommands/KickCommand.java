@@ -30,7 +30,7 @@ public class KickCommand extends Command {
                             if (villageRequest == null) {
                                 villageRequest = new VillageRequest(village, player.getUniqueId(), offlinePlayer.getUniqueId(), VillageRequest.VillageRequestAction.KICK);
                                 villageRequest.send();
-                                villageManager.getRequests().add(villageRequest);
+                                villageManager.add(villageRequest);
                             } else {
                                 player.sendMessage(Chat.format(Message.REQUEST_PENDING.toString()));
                             }

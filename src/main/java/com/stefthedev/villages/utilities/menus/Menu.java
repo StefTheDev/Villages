@@ -16,10 +16,12 @@ import java.util.List;
 
 public abstract class Menu implements InventoryHolder, Listener {
 
+    private final Plugin plugin;
     private final Inventory inventory;
     private final List<MenuItem> itemList;
 
     public Menu(Plugin plugin, String name, int size) {
+        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory( this, size, name);
         this.itemList = new ArrayList<>();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -65,6 +67,10 @@ public abstract class Menu implements InventoryHolder, Listener {
         if(event.getInventory().equals(getInventory())) {
             HandlerList.unregisterAll(this);
         }
+    }
+
+    public Plugin getPlugin() {
+        return plugin;
     }
 
     public abstract Menu build();

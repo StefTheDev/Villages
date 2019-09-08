@@ -3,28 +3,28 @@ package com.stefthedev.villages.villages;
 public class VillageClaim {
 
     private final String world;
-    private final double x, z;
+    private final int x, z;
 
-    public VillageClaim(String world, double x, double z) {
+    public VillageClaim(String world, int x, int z) {
         this.world = world;
         this.x = x;
         this.z = z;
     }
 
-    String getWorld() {
+    public String getWorld() {
         return world;
     }
 
-    double getX() {
+    public int getX() {
         return x;
     }
 
-    double getZ() {
+    public int getZ() {
         return z;
     }
 
     @Override
     public String toString() {
-        return world + ":" + x + ":" + z;
+        return world + ", " + x + ", " + z;
     }
 }

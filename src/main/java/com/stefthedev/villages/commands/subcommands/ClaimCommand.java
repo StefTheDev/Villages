@@ -20,14 +20,15 @@ public class ClaimCommand extends Command {
     @Override
     public boolean run(Player player, String[] args) {
         Village village = villageManager.getVillage(player);
-        if(village != null) {
+        if (village != null) {
             VillageMember villageMember = village.getMember(player.getUniqueId());
-            if(villageMember.hasPermission(VillagePermission.CLAIM_LAND) || village.getOwner().equals(player.getUniqueId())) {
+            if (villageMember.hasPermission(VillagePermission.CLAIM_LAND) || village.getOwner().equals(player.getUniqueId())) {
                 Chunk chunk = player.getLocation().getChunk();
                 Village tempVillage = villageManager.getVillage(chunk);
-                if(tempVillage == null) {
-                    village.add(new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ()));
-                    player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString()));
+                if (tempVillage == null) {
+                    VillageClaim villageClaim = new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
+                    village.add(villageClaim);
+                    player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString().replace("{0}", villageClaim.toString())));
                 } else if (tempVillage == village) {
                     player.sendMessage(Chat.format(Message.VILLAGE_CLAIM_OWNED.toString()));
                 } else {

@@ -25,7 +25,7 @@ public class DisbandCommand extends Command {
                 if(villageRequest == null) {
                     villageRequest = new VillageRequest(village, player.getUniqueId(), null, VillageRequest.VillageRequestAction.DISBAND);
                     villageRequest.send();
-                    villageManager.getRequests().add(villageRequest);
+                    villageManager.add(villageRequest);
                 } else {
                     player.sendMessage(Chat.format(Message.REQUEST_PENDING.toString()));
                 }
