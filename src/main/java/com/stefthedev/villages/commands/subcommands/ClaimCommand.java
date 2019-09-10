@@ -1,5 +1,7 @@
 package com.stefthedev.villages.commands.subcommands;
 
+import com.stefthedev.villages.Villages;
+import com.stefthedev.villages.hooks.WorldGuardHook;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
@@ -10,11 +12,13 @@ import org.bukkit.entity.Player;
 
 public class ClaimCommand extends Command {
 
+    private final Villages villages;
     private final VillageManager villageManager;
 
-    public ClaimCommand(VillageManager villageManager) {
+    public ClaimCommand(Villages villages) {
         super("claim", "claim");
-        this.villageManager = villageManager;
+        this.villages = villages;
+        this.villageManager = villages.getVillageManager();
     }
 
     @Override
@@ -28,6 +32,12 @@ public class ClaimCommand extends Command {
                 if (tempVillage == null) {
                     int claimLimit = villageManager.getMax(player);
                     if(village.getVillageClaims().size() < claimLimit) {
+                        if(villages.isWorldGuard()) {
+                            if(new WorldGuardHook().isRegion(player)) {
+                                player.sendMessage(Chat.format(Message.WORLDGUARD.toString()));
+                                return true;
+                            }
+                        }
                         VillageClaim villageClaim = new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
                         village.add(villageClaim);
                         player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString().replace("{0}", villageClaim.toString())));

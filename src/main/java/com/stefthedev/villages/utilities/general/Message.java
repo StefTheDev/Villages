@@ -92,7 +92,8 @@ public enum Message {
     VILLAGE_SET_OWNER("Messages.village-set-owner", "You have set the new village owner to &b{0}&7."),
     VILLAGE_UNCLAIM("Messages.village-unclaim", "You have unclaimed land for your village."),
     VILLAGE_UNCLAIM_ONE("Messages.village-unclaim-one", "You can't unclaim because your village only owns one land."),
-    VILLAGE_UNCLAIM_OTHER("Messages.village-unclaim-other", "The land you are trying to unclaim does not belong to your village.");
+    VILLAGE_UNCLAIM_OTHER("Messages.village-unclaim-other", "The land you are trying to unclaim does not belong to your village."),
+    WORLDGUARD("Messages.world-guard", "You can't claim a worldguard region.");;
 
     private String path, def;
     private List<String> list;
@@ -106,6 +107,10 @@ public enum Message {
     Message(String path, List<String> list) {
         this.path = path;
         this.list = list;
+    }
+
+    public String getDef() {
+        return configuration.getString(path, def);
     }
 
     @Override
@@ -123,10 +128,6 @@ public enum Message {
 
     public String getPath() {
         return path;
-    }
-
-    public String getDef() {
-        return def;
     }
 
     public List<String> getList() {

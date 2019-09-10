@@ -22,9 +22,9 @@ import java.util.Set;
 public class Villages extends JavaPlugin {
 
     private VillageManager villageManager;
+    private boolean worldGuard = false;
 
     public void onEnable() {
-
         YAML messageYaml = new YAML(this, "messages");
         registerMessages(messageYaml);
 
@@ -34,7 +34,7 @@ public class Villages extends JavaPlugin {
         VillageCommand villageCommand = new VillageCommand(this);
         villageCommand.initialise(
                 new AcceptCommand(villageManager),
-                new ClaimCommand(villageManager),
+                new ClaimCommand(this),
                 new CreateCommand(villageManager),
                 new DenyCommand(villageManager),
                 new DisbandCommand(villageManager),
@@ -68,13 +68,11 @@ public class Villages extends JavaPlugin {
     private void registerMessages(YAML yaml) {
         yaml.setup();
         Message.setConfiguration(yaml.getFileConfiguration());
-        for(Message message: Message.values()) {
-            if (yaml.getFileConfiguration().getString(message.getPath()) == null) {
-                if(message.getList() != null) {
-                    yaml.getFileConfiguration().set(message.getPath(), message.getList());
-                } else {
-                    yaml.getFileConfiguration().set(message.getPath(), message.getDef());
-                }
+        for (Message message : Message.values()) {
+            if (message.getList() != null) {
+                yaml.getFileConfiguration().set(message.getPath(), message.getList());
+            } else {
+                yaml.getFileConfiguration().set(message.getPath(), message.getDef());
             }
         }
         yaml.save();
@@ -89,6 +87,7 @@ public class Villages extends JavaPlugin {
 
         if(getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             getLogger().info("Successfully hooked into WorldGuard.");
+            worldGuard = true;
         }
     }
 
@@ -98,5 +97,9 @@ public class Villages extends JavaPlugin {
 
     public VillageManager getVillageManager() {
         return villageManager;
+    }
+
+    public boolean isWorldGuard() {
+        return worldGuard;
     }
 }
