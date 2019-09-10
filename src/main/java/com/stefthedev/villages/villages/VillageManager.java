@@ -47,9 +47,13 @@ public class VillageManager extends Manager<Village> {
     }
 
     public Village getVillage(Player player) {
+        return getVillage(player.getUniqueId());
+    }
+
+    public Village getVillage(UUID uuid) {
         for (Village village : toSet()) {
             for (VillageMember villageMember : village.getVillageMembers()) {
-                if (villageMember.getUniqueId().equals(player.getUniqueId())) return village;
+                if (villageMember.getUniqueId().equals(uuid)) return village;
             }
         }
         return null;
