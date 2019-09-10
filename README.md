@@ -1,3 +1,6 @@
+![alt text](https://proxy.spigotmc.org/1998f98e51685efd529a2e95ace9d3f3de88e8b4?url=https%3A%2F%2Fi.imgur.com%2FoqVaPoF.jpg)
+
+
 # Villages
 Villages is a unique and simple land claiming plugin that allows you to group up with members to build on your survival world.
 
