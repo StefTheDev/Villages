@@ -7,7 +7,7 @@ Villages is a unique and simple land claiming plugin that allows you to group up
 
 ## Features
 
-1. Efficient YAML data serialization.
+1. Efficient GSON/YAML data serialization.
 2. Request system (KICK, DISBAND, INVITE).
 3. JSON message handling.
 4. Add/Remove Members.
