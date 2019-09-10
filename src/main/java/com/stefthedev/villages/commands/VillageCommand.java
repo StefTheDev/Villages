@@ -1,16 +1,21 @@
 package com.stefthedev.villages.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+
 import com.stefthedev.villages.Villages;
 import com.stefthedev.villages.commands.subcommands.HelpCommand;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
-
-import javax.swing.plaf.nimbus.AbstractRegionPainter;
-import java.util.*;
 
 public class VillageCommand extends Command implements TabCompleter {
 

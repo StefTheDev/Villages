@@ -8,7 +8,6 @@ import com.stefthedev.villages.utilities.menus.MenuItem;
 import com.stefthedev.villages.villages.Village;
 import com.stefthedev.villages.villages.VillageClaim;
 import com.stefthedev.villages.villages.VillageManager;
-import com.stefthedev.villages.villages.VillagePermission;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

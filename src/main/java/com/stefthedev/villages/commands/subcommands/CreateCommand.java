@@ -9,7 +9,6 @@ import com.stefthedev.villages.villages.VillageManager;
 
 import com.stefthedev.villages.villages.VillageMember;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class CreateCommand extends Command {
