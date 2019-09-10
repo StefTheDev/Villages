@@ -23,24 +23,26 @@ public class CreateCommand extends Command {
 
     @Override
     public boolean run(Player player, String[] args) {
-        if(args.length == 2) {
+        if (args.length == 2) {
             Village village = villageManager.getVillage(player);
             if (village == null) {
                 village = villageManager.getVillage(args[1]);
                 if (village != null) {
                     player.sendMessage(Chat.format(Message.VILLAGE_EXISTS.toString().replace("{0}", village.getName())));
                 } else {
-                    Location location = player.getLocation();
-                    if(location.getWorld() == null) return true;
-
                     Chunk chunk = player.getLocation().getChunk();
-                    village = new Village(args[1], "A peaceful settlement.", player.getUniqueId());
-                    village.add(new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ()));
-                    village.add(new VillageMember(player.getUniqueId()));
-                    village.setLocation(location);
+                    Village tempVillage = villageManager.getVillage(chunk);
+                    if (tempVillage != null) {
+                        player.sendMessage(Chat.format(Message.VILLAGE_CREATE_OTHER.toString().replace("{0}", tempVillage.getName())));
+                    } else {
+                        village = new Village(args[1], "A peaceful settlement.", player.getUniqueId());
+                        village.add(new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ()));
+                        village.add(new VillageMember(player.getUniqueId()));
+                        village.setLocation(player.getLocation());
 
-                    villageManager.add(village);
-                    player.sendMessage(Chat.format(Message.VILLAGE_CREATE.toString().replace("{0}", village.getName())));
+                        villageManager.add(village);
+                        player.sendMessage(Chat.format(Message.VILLAGE_CREATE.toString().replace("{0}", village.getName())));
+                    }
                 }
             } else {
                 player.sendMessage(Chat.format(Message.VILLAGE_NOT_NULL.toString()));

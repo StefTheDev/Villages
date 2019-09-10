@@ -6,7 +6,7 @@
 
     <groupId>com.stefthedev.villages</groupId>
     <artifactId>Villages</artifactId>
-    <version>BETA-5.0</version>
+    <version>BETA-5.2</version>
     <build>
         <plugins>
             <plugin>

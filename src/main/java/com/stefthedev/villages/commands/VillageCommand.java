@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.util.*;
 
 public class VillageCommand extends Command implements TabCompleter {
@@ -24,13 +25,16 @@ public class VillageCommand extends Command implements TabCompleter {
 
     public boolean run(Player player, String[] args) {
         if(args.length > 0) {
-            commands.forEach(command -> {
+            for(Command command : commands) {
                 if(args[0].equalsIgnoreCase(command.toString())) {
                     if(player.hasPermission(toString() + "." + command.toString())) {
                         command.run(player, args);
+                    } else {
+                        player.sendMessage(Chat.format(Message.NO_PERMISSION.toString()));
                     }
+                    break;
                 }
-            });
+            }
         } else {
             return new HelpCommand(this).run(player, args);
         }

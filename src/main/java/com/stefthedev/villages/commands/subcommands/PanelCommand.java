@@ -30,7 +30,7 @@ public class PanelCommand extends Command {
             if(villageMember.hasPermission(VillagePermission.PANEL) || village.getOwner().equals(player.getUniqueId())) {
                 new PanelMenu(villages, villageManager, village).build().open(player);
             } else {
-                player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.HOME.name() )));
+                player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.PANEL.name() )));
             }
         } else {
             player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));

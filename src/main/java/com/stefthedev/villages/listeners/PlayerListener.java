@@ -37,7 +37,7 @@ public class PlayerListener implements Listener {
         Village playerVillager = villageManager.getVillage(player);
 
         Material material = block.getType();
-        if(material == Material.FURNACE || material == Material.FURNACE_MINECART || material == Material.BLAST_FURNACE) {
+        if(material == Material.FURNACE) {
             if (playerVillager == currentVillage) {
                 if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.FURNACE_ACCESS)
                         && !playerVillager.getOwner().equals(player.getUniqueId())) {
@@ -59,7 +59,7 @@ public class PlayerListener implements Listener {
             }
         }
 
-        if(material == Material.CHEST || material == Material.CHEST_MINECART || material == Material.TRAPPED_CHEST) {
+        if(material == Material.CHEST) {
             if (playerVillager == currentVillage) {
                 if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.CHEST_ACCESS)
                         && !playerVillager.getOwner().equals(player.getUniqueId())) {
@@ -70,7 +70,7 @@ public class PlayerListener implements Listener {
             }
         }
 
-        if(material == Material.HOPPER || material == Material.HOPPER_MINECART) {
+        if(material == Material.HOPPER) {
             if (playerVillager == currentVillage) {
                 if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BREWING_ACCESS)
                         && !playerVillager.getOwner().equals(player.getUniqueId())) {

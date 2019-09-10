@@ -29,18 +29,18 @@ public class InviteCommand extends Command {
                         if (target != player) {
                             if (target != null) {
                                 Village targetVillage = villageManager.getVillage(target);
-                                    if (targetVillage == null) {
+                                if (targetVillage == null) {
                                     villageRequest = new VillageRequest(village, player.getUniqueId(), target.getUniqueId(), VillageRequest.VillageRequestAction.INVITE);
                                     villageRequest.send();
                                     villageManager.add(villageRequest);
                                 } else {
-                                    player.sendMessage("Target already belongs to a village.");
+                                    player.sendMessage(Chat.format(Message.REQUEST_INVITE_TARGET_NOT_NULL.toString().replace("{0}", target.getDisplayName())));
                                 }
                             } else {
                                 player.sendMessage(Chat.format(Message.PLAYER_OFFLINE.toString().replace("{0}", args[1])));
                             }
                         } else {
-                            player.sendMessage("You can't invite yourself.");
+                            player.sendMessage(Chat.format(Message.REQUEST_INVITE_SELF.toString()));
                         }
                     } else {
                         player.sendMessage(Chat.format(Message.REQUEST_PENDING.toString()));

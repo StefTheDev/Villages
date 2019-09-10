@@ -5,9 +5,12 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permissible;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VillageManager extends Manager<Village> {
 
@@ -29,8 +32,8 @@ public class VillageManager extends Manager<Village> {
     }
 
     public Village getVillage(String string) {
-        for(Village village : toSet()) {
-            if(village.getName().equalsIgnoreCase(string)) {
+        for (Village village : toSet()) {
+            if (village.getName().equalsIgnoreCase(string)) {
                 return village;
             }
         }
@@ -38,35 +41,41 @@ public class VillageManager extends Manager<Village> {
     }
 
     public Village getVillage(Chunk chunk) {
-        for(Village village : toSet()) {
-            for(VillageClaim villageClaim : village.getVillageClaims()) {
-                if(chunkMatchesClaim(chunk, villageClaim)) return village;
+        for (Village village : toSet()) {
+            for (VillageClaim villageClaim : village.getVillageClaims()) {
+                if (chunkMatchesClaim(chunk, villageClaim)) return village;
             }
         }
         return null;
     }
 
     public Village getVillage(Player player) {
-        for(Village village : toSet()) {
-            for(VillageMember villageMember : village.getVillageMembers()) {
-                if(villageMember.getUniqueId().equals(player.getUniqueId())) return village;
+        for (Village village : toSet()) {
+            for (VillageMember villageMember : village.getVillageMembers()) {
+                if (villageMember.getUniqueId().equals(player.getUniqueId())) return village;
             }
         }
         return null;
     }
 
     public VillageRequest getRequest(Player player) {
-        for(VillageRequest villageRequest: villageRequests) {
-            if(villageRequest.getUuid().equals(player.getUniqueId())) {
-                return villageRequest;
+        for (VillageRequest villageRequest : villageRequests) {
+            if (villageRequest.getTarget() != null) {
+                if (villageRequest.getTarget().equals(player.getUniqueId())) {
+                    return villageRequest;
+                }
+            } else {
+                if (villageRequest.getUuid().equals(player.getUniqueId())) {
+                    return villageRequest;
+                }
             }
         }
         return null;
     }
 
     public VillageClaim getClaim(Village village, Chunk chunk) {
-        for(VillageClaim villageClaim : village.getVillageClaims()) {
-            if(chunkMatchesClaim(chunk, villageClaim)) {
+        for (VillageClaim villageClaim : village.getVillageClaims()) {
+            if (chunkMatchesClaim(chunk, villageClaim)) {
                 return villageClaim;
             }
         }
@@ -76,11 +85,27 @@ public class VillageManager extends Manager<Village> {
     public OfflinePlayer offlinePlayer(Village village, String name) {
         for (VillageMember villageMember : village.getVillageMembers()) {
             OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(villageMember.getUniqueId());
-            if(Objects.requireNonNull(offlinePlayer.getName()).equalsIgnoreCase(name)) {
+            if (Objects.requireNonNull(offlinePlayer.getName()).equalsIgnoreCase(name)) {
                 return offlinePlayer;
             }
         }
         return null;
+    }
+
+    public int getMax(Player player) {
+        final AtomicInteger max = new AtomicInteger();
+
+        player.getEffectivePermissions().stream().map(PermissionAttachmentInfo::getPermission).map(String::toLowerCase).filter(value ->
+                value.startsWith("village.claims.")).map(value ->
+                value.replace("village.claims.", "")).forEach(value -> { max.set(-1);
+            try {
+                if (Integer.parseInt(value) > max.get()) max.set(Integer.parseInt(value));
+            } catch (NumberFormatException ignored) {
+
+            }
+        });
+
+        return max.get();
     }
 
     private boolean chunkMatchesClaim(Chunk chunk, VillageClaim villageClaim) {

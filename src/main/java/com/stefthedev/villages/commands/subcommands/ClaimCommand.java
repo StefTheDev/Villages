@@ -26,9 +26,14 @@ public class ClaimCommand extends Command {
                 Chunk chunk = player.getLocation().getChunk();
                 Village tempVillage = villageManager.getVillage(chunk);
                 if (tempVillage == null) {
-                    VillageClaim villageClaim = new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
-                    village.add(villageClaim);
-                    player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString().replace("{0}", villageClaim.toString())));
+                    int claimLimit = villageManager.getMax(player);
+                    if(village.getVillageClaims().size() < claimLimit) {
+                        VillageClaim villageClaim = new VillageClaim(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
+                        village.add(villageClaim);
+                        player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString().replace("{0}", villageClaim.toString())));
+                    } else {
+                        player.sendMessage(Chat.format(Message.VILLAGE_MAX_CLAIMS.toString().replace("{0}", String.valueOf(claimLimit))));
+                    }
                 } else if (tempVillage == village) {
                     player.sendMessage(Chat.format(Message.VILLAGE_CLAIM_OWNED.toString()));
                 } else {

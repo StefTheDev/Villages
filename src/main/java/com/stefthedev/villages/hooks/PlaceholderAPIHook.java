@@ -42,7 +42,7 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 
         if (village != null) {
             if (identifier.equalsIgnoreCase("name")) {
-                return village.toString();
+                return village.getName();
             }
 
             if (identifier.equalsIgnoreCase("owner")) {
@@ -62,7 +62,7 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
         if(village != null)
         {
             if (identifier.equalsIgnoreCase("target_name")) {
-                return village.toString();
+                return village.getName();
             }
             if (identifier.equalsIgnoreCase("target_owner")) {
                 return villages.getServer().getOfflinePlayer(village.getOwner()).getName();
