@@ -6,7 +6,7 @@ import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.villages.VillageMember;
 import com.stefthedev.villages.villages.VillagePermission;
 import org.bukkit.entity.Player;

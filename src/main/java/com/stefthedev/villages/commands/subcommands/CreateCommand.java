@@ -5,11 +5,10 @@ import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.villages.Village;
 import com.stefthedev.villages.villages.VillageClaim;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 
 import com.stefthedev.villages.villages.VillageMember;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class CreateCommand extends Command {

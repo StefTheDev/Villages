@@ -5,7 +5,7 @@ import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.menus.Menu;
 import com.stefthedev.villages.utilities.menus.MenuItem;
 import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.villages.VillageMember;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

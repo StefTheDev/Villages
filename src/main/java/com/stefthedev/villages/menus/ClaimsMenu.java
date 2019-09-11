@@ -7,8 +7,7 @@ import com.stefthedev.villages.utilities.menus.Menu;
 import com.stefthedev.villages.utilities.menus.MenuItem;
 import com.stefthedev.villages.villages.Village;
 import com.stefthedev.villages.villages.VillageClaim;
-import com.stefthedev.villages.villages.VillageManager;
-import com.stefthedev.villages.villages.VillagePermission;
+import com.stefthedev.villages.managers.VillageManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +23,7 @@ public class ClaimsMenu extends Menu {
     private final Village village;
     private int index;
 
-    public ClaimsMenu(Plugin plugin, VillageManager villageManager, Village village, int index) {
+    ClaimsMenu(Plugin plugin, VillageManager villageManager, Village village, int index) {
         super(plugin, village.getName() + " Claims", 36);
         this.villageManager = villageManager;
         this.village = village;

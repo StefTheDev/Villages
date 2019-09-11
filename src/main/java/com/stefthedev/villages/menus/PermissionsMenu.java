@@ -5,7 +5,7 @@ import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.menus.Menu;
 import com.stefthedev.villages.utilities.menus.MenuItem;
 import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.villages.VillageMember;
 import com.stefthedev.villages.villages.VillagePermission;
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ public class PermissionsMenu extends Menu {
     private final VillageManager villageManager;
     private final VillageMember villageMember;
 
-    public PermissionsMenu(Plugin plugin, Village village, VillageManager villageManager, VillageMember villageMember) {
+    PermissionsMenu(Plugin plugin, Village village, VillageManager villageManager, VillageMember villageMember) {
         super(plugin, Bukkit.getOfflinePlayer(villageMember.getUniqueId()).getName() + "'s Permissions", 36);
         this.village = village;
         this.villageManager = villageManager;

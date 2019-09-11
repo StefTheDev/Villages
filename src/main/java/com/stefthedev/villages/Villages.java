@@ -11,7 +11,7 @@ import com.stefthedev.villages.listeners.WorldListener;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.storage.YAML;
 import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -2,7 +2,7 @@ package com.stefthedev.villages.hooks;
 
 import com.stefthedev.villages.Villages;
 import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 

@@ -1,5 +1,6 @@
 package com.stefthedev.villages.villages;
 
+import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Message;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -90,11 +91,11 @@ public class VillageRequest {
         }
     }
 
-    UUID getUuid() {
+    public UUID getUniqueId() {
         return uuid;
     }
 
-    UUID getTarget() {
+    public UUID getTarget() {
         return target;
     }
 }

@@ -12,10 +12,12 @@ import java.util.Set;
 
 public class JSON<T> {
 
+    private final Plugin plugin;
     private final Gson gson;
     private final File file;
 
     public JSON(String file, Plugin plugin) {
+        this.plugin = plugin;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.file =  new File(plugin.getDataFolder().getPath() + File.separator + file + ".json");
     }
@@ -40,5 +42,13 @@ public class JSON<T> {
         } catch (IOException e) {
             return new HashSet<>();
         }
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Plugin getPlugin() {
+        return plugin;
     }
 }

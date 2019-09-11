@@ -1,5 +1,9 @@
-package com.stefthedev.villages.villages;
+package com.stefthedev.villages.managers;
 import com.stefthedev.villages.utilities.general.Manager;
+import com.stefthedev.villages.villages.Village;
+import com.stefthedev.villages.villages.VillageClaim;
+import com.stefthedev.villages.villages.VillageMember;
+import com.stefthedev.villages.villages.VillageRequest;
 import org.bukkit.Chunk;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -62,7 +66,7 @@ public class VillageManager extends Manager<Village> {
                     return villageRequest;
                 }
             } else {
-                if (villageRequest.getUuid().equals(player.getUniqueId())) {
+                if (villageRequest.getUniqueId().equals(player.getUniqueId())) {
                     return villageRequest;
                 }
             }

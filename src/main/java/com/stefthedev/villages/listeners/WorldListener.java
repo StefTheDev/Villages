@@ -2,7 +2,7 @@ package com.stefthedev.villages.listeners;
 
 import com.google.gson.reflect.TypeToken;
 import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;

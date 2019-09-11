@@ -3,7 +3,7 @@ package com.stefthedev.villages.commands.subcommands;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
-import com.stefthedev.villages.villages.VillageManager;
+import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.villages.VillageRequest;
 import org.bukkit.entity.Player;
 

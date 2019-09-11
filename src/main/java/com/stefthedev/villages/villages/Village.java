@@ -14,6 +14,7 @@ public class Village {
 
     private final Set<VillageMember> villageMembers;
     private final Set<VillageClaim> villageClaims;
+    private final Set<VillageResource> villageResources;
 
     private VillageLocation villageLocation;
 
@@ -24,6 +25,7 @@ public class Village {
 
         this.villageMembers = new HashSet<>();
         this.villageClaims = new HashSet<>();
+        this.villageResources = new HashSet<>();
     }
 
     public void add(int level) {
@@ -97,6 +99,10 @@ public class Village {
 
     public Set<VillageClaim> getVillageClaims() {
         return Collections.unmodifiableSet(villageClaims);
+    }
+
+    public Set<VillageResource> getVillageResources() {
+        return Collections.unmodifiableSet(villageResources);
     }
 
     public VillageLocation getVillageLocation() {
