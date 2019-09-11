@@ -91,13 +91,12 @@ Add this part into your ```<repositories>``` section.
 ### 2. Adding the dependency
 
 Now you just have to add the dependency itself to your pom.xml, just add this part into your ```<dependencies>``` section.
-Make sure to replace VERSION with the Version of Villages that you are targeting, e.g. "BETA-5.4".
 
 ```xml
 <dependency>
-  <groupId>com.github.thebusybiscuit</groupId>
-  <artifactId>CS-CoreLib2</artifactId>
-  <version>VERSION</version>
+  <groupId>com.github.Stefthedev</groupId>
+  <artifactId>Villages</artifactId>
+  <version>master-SNAPSHOT</version>
 </dependency>
 ```
 
