@@ -1,16 +1,16 @@
 package com.stefthedev.villages;
 
 import com.google.gson.reflect.TypeToken;
-import com.stefthedev.villages.commands.VillageCommand;
-import com.stefthedev.villages.commands.subcommands.*;
+import com.stefthedev.villages.resources.commands.VillageCommand;
+import com.stefthedev.villages.resources.commands.subcommands.*;
 import com.stefthedev.villages.hooks.PlaceholderAPIHook;
-import com.stefthedev.villages.listeners.EntityListener;
-import com.stefthedev.villages.listeners.PlayerListener;
-import com.stefthedev.villages.listeners.VillageListener;
-import com.stefthedev.villages.listeners.WorldListener;
+import com.stefthedev.villages.resources.listeners.EntityListener;
+import com.stefthedev.villages.resources.listeners.PlayerListener;
+import com.stefthedev.villages.resources.listeners.VillageListener;
+import com.stefthedev.villages.resources.listeners.WorldListener;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.storage.YAML;
-import com.stefthedev.villages.villages.Village;
+import com.stefthedev.villages.data.Village;
 import com.stefthedev.villages.managers.VillageManager;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;

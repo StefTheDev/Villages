@@ -1,12 +1,15 @@
 package com.stefthedev.villages.menus;
 
+import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.VillageMember;
+import com.stefthedev.villages.data.VillagePermission;
+import com.stefthedev.villages.data.VillageRequest;
 import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Item;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.menus.Menu;
 import com.stefthedev.villages.utilities.menus.MenuItem;
-import com.stefthedev.villages.villages.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

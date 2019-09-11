@@ -1,9 +1,6 @@
 package com.stefthedev.villages.managers;
+import com.stefthedev.villages.data.*;
 import com.stefthedev.villages.utilities.general.Manager;
-import com.stefthedev.villages.villages.Village;
-import com.stefthedev.villages.villages.VillageClaim;
-import com.stefthedev.villages.villages.VillageMember;
-import com.stefthedev.villages.villages.VillageRequest;
 import org.bukkit.Chunk;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
