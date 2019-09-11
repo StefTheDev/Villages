@@ -71,6 +71,48 @@ Since villages is still in ALPHA we are still working hard on releasing more fea
 - [ ] Resources management (Special Feature)
 - [x] Flags and Permissions
 
+## Developer API
+
+As of Beta-5.4 this Plugin now has a Developer API that you can utilise in your projects to hook into Villages.
+If you are not using Maven, then just skip the first two steps.
+
+### 1. Adding the repository
+
+Since this Plugin is available on GitHub and doesn't have it's own maven-repository, you can just add the jitpack.io repository if you haven't already.
+Add this part into your ```<repositories>``` section.
+
+```xml
+<repository>
+  <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
+</repository>
+```
+
+### 2. Adding the dependency
+
+Now you just have to add the dependency itself to your pom.xml, just add this part into your ```<dependencies>``` section.
+Make sure to replace VERSION with the Version of Villages that you are targeting, e.g. "BETA-5.4".
+
+```xml
+<dependency>
+  <groupId>com.github.thebusybiscuit</groupId>
+  <artifactId>CS-CoreLib2</artifactId>
+  <version>VERSION</version>
+</dependency>
+```
+
+### 3. Accessing the API
+
+Villages has a static utility class called "VillagesAPI".
+In there you can access the following methods, if they aren't self-explaining, then read up the javadoc-annotation on them in your IDE.
+
+```java
+Optional<Village> getVillage(Chunk chunk);
+Optional<Village> getVillage(Player player);
+Optional<Village> getVillage(UUID playerUUID);
+Optional<Village> getVillage(String villageName);
+boolean hasPermission(UUID playerUUID, Village village, VillagePermission permission);
+```
 
 ## Support
 
