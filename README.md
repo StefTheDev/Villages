@@ -1,10 +1,13 @@
+![alt text](https://proxy.spigotmc.org/1998f98e51685efd529a2e95ace9d3f3de88e8b4?url=https%3A%2F%2Fi.imgur.com%2FoqVaPoF.jpg)
+
+
 # Villages
 Villages is a unique and simple land claiming plugin that allows you to group up with members to build on your survival world.
 
 
 ## Features
 
-1. Efficient YAML data serialization.
+1. Efficient GSON/YAML data serialization.
 2. Request system (KICK, DISBAND, INVITE).
 3. JSON message handling.
 4. Add/Remove Members.
@@ -34,6 +37,29 @@ Key: village.{command}
 Examples:
 - /village create | village.create
 - /village disband | village.disband
+```
+
+Permissions/Flags:
+```
+ARMOR_STAND_ACCESS
+BLOCK_BREAK
+BLOCK_PLACE
+BREWING_ACCESS
+CHEST_ACCESS
+CLAIM_LAND
+DISBAND
+DRAGON_EGG_TOUCH
+EDIT_PERMISSIONS
+FURNACE_ACCESS
+HOME
+INVITE_MEMBER
+KICK_MEMBER
+LAVA_PLACEMENT
+SET_DESCRIPTION
+SET_HOME
+SHULKER_ACCESS
+UNCLAIM_LAND
+WATER_PLACEMENT
 ```
 
 
