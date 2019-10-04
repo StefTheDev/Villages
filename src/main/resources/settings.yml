@@ -1,0 +1,3 @@
+default-claim-limit: 10
+enabled-worlds:
+  - world

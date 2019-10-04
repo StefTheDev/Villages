@@ -1,7 +1,7 @@
 package com.stefthedev.villages.resources.listeners;
 
 import com.google.gson.reflect.TypeToken;
-import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

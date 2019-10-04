@@ -1,10 +1,10 @@
 package com.stefthedev.villages.resources.listeners;
 
 import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
 
-import com.stefthedev.villages.data.VillagePermission;
+import com.stefthedev.villages.data.village.VillagePermission;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
@@ -27,6 +27,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onFurnaceInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if(player.isOp()) return;
 
         Block block = event.getClickedBlock();
         if(block == null) return;

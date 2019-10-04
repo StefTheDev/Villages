@@ -93,7 +93,8 @@ public enum Message {
     VILLAGE_UNCLAIM("Messages.village-unclaim", "You have unclaimed land for your village."),
     VILLAGE_UNCLAIM_ONE("Messages.village-unclaim-one", "You can't unclaim because your village only owns one land."),
     VILLAGE_UNCLAIM_OTHER("Messages.village-unclaim-other", "The land you are trying to unclaim does not belong to your village."),
-    WORLDGUARD("Messages.world-guard", "You can't claim a worldguard region.");;
+    WORLDGUARD("Messages.world-guard", "You can't claim a worldguard region."),
+    WORLD_NOT_ENABLED("Messages.world-not-enabled", "Villages is not enabled in this world.");
 
     private String path, def;
     private List<String> list;

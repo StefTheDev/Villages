@@ -1,4 +1,4 @@
-package com.stefthedev.villages.data;
+package com.stefthedev.villages.data.village;
 
 public enum VillagePermission {
     ARMOR_STAND_ACCESS,

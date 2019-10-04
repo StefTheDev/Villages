@@ -3,12 +3,10 @@ package com.stefthedev.villages.utilities.general;
 import com.stefthedev.villages.utilities.storage.JSON;
 import org.bukkit.plugin.Plugin;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class Manager<T> {
 

@@ -1,6 +1,9 @@
 package com.stefthedev.villages;
 
 import com.google.gson.reflect.TypeToken;
+import com.stefthedev.villages.data.settings.Setting;
+import com.stefthedev.villages.data.settings.SettingType;
+import com.stefthedev.villages.managers.SettingsManager;
 import com.stefthedev.villages.resources.commands.VillageCommand;
 import com.stefthedev.villages.resources.commands.subcommands.*;
 import com.stefthedev.villages.hooks.PlaceholderAPIHook;
@@ -10,26 +13,33 @@ import com.stefthedev.villages.resources.listeners.VillageListener;
 import com.stefthedev.villages.resources.listeners.WorldListener;
 import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.storage.YAML;
-import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
+import org.bukkit.World;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Villages extends JavaPlugin {
 
     private VillageManager villageManager;
+    private SettingsManager settingsManager;
+
     private boolean worldGuard = false;
 
     public void onEnable() {
-        YAML messageYaml = new YAML(this, "messages");
-        registerMessages(messageYaml);
+        registerMessages(new YAML(this, "messages"));
 
         villageManager = new VillageManager(this);
         villageManager.load(new TypeToken<Set<Village>>(){}.getType());
+
+        settingsManager = new SettingsManager(this, new YAML(this, "settings"));
+        settingsManager.load();
+
+        for(World world : getServer().getWorlds()) {
+            getLogger().info(world.getName());
+        }
 
         VillageCommand villageCommand = new VillageCommand(this);
         villageCommand.initialise(
@@ -99,7 +109,12 @@ public class Villages extends JavaPlugin {
         return villageManager;
     }
 
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
+    }
+
     public boolean isWorldGuard() {
         return worldGuard;
     }
+
 }

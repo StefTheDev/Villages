@@ -1,8 +1,13 @@
 package com.stefthedev.villages.resources.commands.subcommands;
 
 import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.data.*;
+import com.stefthedev.villages.data.settings.SettingType;
+import com.stefthedev.villages.data.village.Village;
+import com.stefthedev.villages.data.village.VillageClaim;
+import com.stefthedev.villages.data.village.VillageMember;
+import com.stefthedev.villages.data.village.VillagePermission;
 import com.stefthedev.villages.hooks.WorldGuardHook;
+import com.stefthedev.villages.managers.SettingsManager;
 import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
@@ -15,11 +20,13 @@ public class ClaimCommand extends Command {
 
     private final Villages villages;
     private final VillageManager villageManager;
+    private final SettingsManager settingsManager;
 
     public ClaimCommand(Villages villages) {
         super("claim", "claim");
         this.villages = villages;
         this.villageManager = villages.getVillageManager();
+        this.settingsManager = villages.getSettingsManager();
     }
 
     @Override
@@ -32,7 +39,8 @@ public class ClaimCommand extends Command {
                 Village tempVillage = villageManager.getVillage(chunk);
                 if (tempVillage == null) {
                     int claimLimit = villageManager.getMax(player);
-                    if(village.getVillageClaims().size() < claimLimit) {
+                    int defaultClaimLimit = (int) settingsManager.getSetting(SettingType.DEFAULT_CLAIM_LIMIT).getElement();
+                    if(village.getVillageClaims().size() < claimLimit || village.getVillageClaims().size() < claimLimit + defaultClaimLimit) {
                         if(villages.isWorldGuard()) {
                             if(new WorldGuardHook().isRegion(player)) {
                                 player.sendMessage(Chat.format(Message.WORLDGUARD.toString()));
@@ -43,7 +51,7 @@ public class ClaimCommand extends Command {
                         village.add(villageClaim);
                         player.sendMessage(Chat.format(Message.VILLAGE_CLAIM.toString().replace("{0}", villageClaim.toString())));
                     } else {
-                        player.sendMessage(Chat.format(Message.VILLAGE_MAX_CLAIMS.toString().replace("{0}", String.valueOf(claimLimit))));
+                        player.sendMessage(Chat.format(Message.VILLAGE_MAX_CLAIMS.toString().replace("{0}", String.valueOf(claimLimit + defaultClaimLimit))));
                     }
                 } else if (tempVillage == village) {
                     player.sendMessage(Chat.format(Message.VILLAGE_CLAIM_OWNED.toString()));

@@ -1,14 +1,13 @@
 package com.stefthedev.villages.resources.commands.subcommands;
 
-import com.stefthedev.villages.data.VillageClaim;
-import com.stefthedev.villages.data.VillageResource;
+import com.stefthedev.villages.data.village.VillageClaim;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
-import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
 
-import com.stefthedev.villages.data.VillageMember;
+import com.stefthedev.villages.data.village.VillageMember;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 

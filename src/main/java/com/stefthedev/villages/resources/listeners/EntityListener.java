@@ -1,7 +1,7 @@
 package com.stefthedev.villages.resources.listeners;
 
 import com.stefthedev.villages.Villages;
-import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

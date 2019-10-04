@@ -1,4 +1,4 @@
-package com.stefthedev.villages.data;
+package com.stefthedev.villages.data.village;
 
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;

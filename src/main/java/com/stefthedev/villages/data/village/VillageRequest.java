@@ -1,8 +1,5 @@
-package com.stefthedev.villages.data;
+package com.stefthedev.villages.data.village;
 
-import com.stefthedev.villages.data.Village;
-import com.stefthedev.villages.data.VillageMember;
-import com.stefthedev.villages.data.VillagePermission;
 import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Message;
@@ -60,8 +57,11 @@ public class VillageRequest {
                 target.spigot().sendMessage(accept, deny);
             } break;
             case KICK: {
-                player.sendMessage(Chat.format(Message.REQUEST_KICK.toString()));
-                player.spigot().sendMessage(accept, deny);
+                Player target = Bukkit.getPlayer(this.uuid);
+                if(target != null) {
+                    player.sendMessage(Chat.format(Message.REQUEST_KICK.toString().replace("{0}", target.getName())));
+                    player.spigot().sendMessage(accept, deny);
+                }
             } break;
         }
     }

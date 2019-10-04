@@ -1,9 +1,9 @@
 package com.stefthedev.villages.menus;
 
-import com.stefthedev.villages.data.Village;
-import com.stefthedev.villages.data.VillageMember;
-import com.stefthedev.villages.data.VillagePermission;
-import com.stefthedev.villages.data.VillageRequest;
+import com.stefthedev.villages.data.village.Village;
+import com.stefthedev.villages.data.village.VillageMember;
+import com.stefthedev.villages.data.village.VillagePermission;
+import com.stefthedev.villages.data.village.VillageRequest;
 import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Item;

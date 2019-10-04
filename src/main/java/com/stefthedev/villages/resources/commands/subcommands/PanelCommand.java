@@ -5,10 +5,10 @@ import com.stefthedev.villages.menus.PanelMenu;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
-import com.stefthedev.villages.data.Village;
+import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
-import com.stefthedev.villages.data.VillageMember;
-import com.stefthedev.villages.data.VillagePermission;
+import com.stefthedev.villages.data.village.VillageMember;
+import com.stefthedev.villages.data.village.VillagePermission;
 import org.bukkit.entity.Player;
 
 public class PanelCommand extends Command {

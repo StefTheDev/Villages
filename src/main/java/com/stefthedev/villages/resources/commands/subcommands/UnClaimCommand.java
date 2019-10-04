@@ -1,6 +1,9 @@
 package com.stefthedev.villages.resources.commands.subcommands;
 
-import com.stefthedev.villages.data.*;
+import com.stefthedev.villages.data.village.Village;
+import com.stefthedev.villages.data.village.VillageClaim;
+import com.stefthedev.villages.data.village.VillageMember;
+import com.stefthedev.villages.data.village.VillagePermission;
 import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
