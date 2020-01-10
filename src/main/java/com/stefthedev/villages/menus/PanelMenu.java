@@ -121,17 +121,19 @@ public class PanelMenu extends Menu {
     }
 
     private ItemStack peaceful(boolean enabled) {
-        Item item = new Item();
         if(enabled) {
-            item.material(Material.LIME_DYE);
-            item.name(Message.MENU_PEACEFUL_ENABLED_TITLE.toString());
-            item.lore(Message.MENU_PEACEFUL_ENABLED_LORE.toList());
+           return new Item()
+                   .material(Material.LIME_DYE)
+                   .name(Message.MENU_PEACEFUL_ENABLED_TITLE.toString())
+                   .lore(Message.MENU_PEACEFUL_ENABLED_LORE.toList())
+                   .build();
         } else {
-            item.material(Material.GRAY_DYE);
-            item.name(Message.MENU_PEACEFUL_DISABLED_TITLE.toString());
-            item.lore(Message.MENU_PEACEFUL_DISABLED_LORE.toList());
+            return new Item()
+                    .material(Material.LIME_DYE)
+                    .name(Message.MENU_PEACEFUL_DISABLED_TITLE.toString())
+                    .lore(Message.MENU_PEACEFUL_DISABLED_LORE.toList())
+                    .build();
         }
-        return item.build();
     }
 
 }
