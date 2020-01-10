@@ -21,11 +21,12 @@ Villages is a unique and simple land claiming plugin that allows you to group up
 ## Configuration
 
 The configuration files have been formatted into YAML so that it makes it more readable for commercial use.
-We highly recommend to not configure any data in the **villages.yml** file unless you know what you are doing.
+We highly recommend to not configure any data in the **villages.json** file unless you know what you are doing.
 
 Configuration files:
 - messages.yml
-- villages.yml (Not Recommended to configure)
+- settings.yml
+- villages.json (Not Recommended to configure)
 
 
 ## Commands and Permissions
