@@ -89,7 +89,10 @@ public class VillageRequest {
             case KICK: {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target);
                 Player player = offlinePlayer.getPlayer();
-                if(player != null)  player.sendMessage(Chat.format(Message.REQUEST_KICK_TARGET.toString().replace("{0}", village.getName())));
+                if(player != null) {
+                    village.remove(village.getMember(player.getUniqueId()));
+                    player.sendMessage(Chat.format(Message.REQUEST_KICK_TARGET.toString().replace("{0}", village.getName())));
+                }
             } break;
         }
     }

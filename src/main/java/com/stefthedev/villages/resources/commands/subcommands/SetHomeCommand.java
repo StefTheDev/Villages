@@ -23,7 +23,7 @@ public class SetHomeCommand extends Command {
         Village village = villageManager.getVillage(player);
         if(village != null) {
             VillageMember villageMember = village.getMember(player.getUniqueId());
-            if(villageMember.hasPermission(VillagePermission.SET_HOME) || village.getOwner().equals(player.getUniqueId())) {
+            if(villageMember.hasPermission(VillagePermission.SET_HOME) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.SET_HOME)) {
                 village.setLocation(player.getLocation());
                 player.sendMessage(Chat.format(Message.VILLAGE_SET_HOME.toString()));
             } else {

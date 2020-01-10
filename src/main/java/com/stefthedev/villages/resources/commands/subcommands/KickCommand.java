@@ -26,7 +26,7 @@ public class KickCommand extends Command {
             Village village = villageManager.getVillage(player);
             if(village != null) {
                 VillageMember villageMember = village.getMember(player.getUniqueId());
-                if(villageMember.hasPermission(VillagePermission.KICK_MEMBER) || village.getOwner().equals(player.getUniqueId())) {
+                if(villageMember.hasPermission(VillagePermission.KICK_MEMBER) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.KICK_MEMBER)) {
                     OfflinePlayer offlinePlayer = villageManager.offlinePlayer(village, args[1]);
                     if(offlinePlayer != null) {
                         if(offlinePlayer.getUniqueId() != player.getUniqueId()) {
@@ -51,7 +51,7 @@ public class KickCommand extends Command {
                 player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));
             }
         } else {
-            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village" + getUsage())));
+            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village " + getUsage())));
         }
         return true;
     }

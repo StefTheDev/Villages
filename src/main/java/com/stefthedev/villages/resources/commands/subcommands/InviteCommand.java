@@ -26,7 +26,7 @@ public class InviteCommand extends Command {
             Village village = villageManager.getVillage(player);
             if (village != null) {
                 VillageMember villageMember = village.getMember(player.getUniqueId());
-                if (villageMember.hasPermission(VillagePermission.INVITE_MEMBER) || village.getOwner().equals(player.getUniqueId())) {
+                if (villageMember.hasPermission(VillagePermission.INVITE_MEMBER) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.INVITE_MEMBER)) {
                     VillageRequest villageRequest = villageManager.getRequest(player);
                     if (villageRequest == null) {
                         Player target = Bukkit.getPlayer(args[1]);
@@ -56,7 +56,7 @@ public class InviteCommand extends Command {
                 player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));
             }
         } else {
-            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village" + getUsage())));
+            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village " + getUsage())));
         }
         return true;
     }

@@ -23,7 +23,7 @@ public class SetDescriptionCommand extends Command {
         Village village = villageManager.getVillage(player);
         if(village != null) {
             VillageMember villageMember = village.getMember(player.getUniqueId());
-            if(villageMember.hasPermission(VillagePermission.SET_DESCRIPTION) || village.getOwner().equals(player.getUniqueId())) {
+            if(villageMember.hasPermission(VillagePermission.SET_DESCRIPTION) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.SET_DESCRIPTION)) {
                 StringBuilder description = new StringBuilder();
                 for(String string: args) {
                     if(!string.equalsIgnoreCase(toString())) description.append(string).append(" ");
@@ -35,7 +35,7 @@ public class SetDescriptionCommand extends Command {
                     player.sendMessage(Chat.format(Message.VILLAGE_DESCRIPTION_LIMIT.toString()));
                 }
             } else {
-                player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.SET_HOME.name() )));
+                player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.SET_DESCRIPTION.name() )));
             }
         } else {
             player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));

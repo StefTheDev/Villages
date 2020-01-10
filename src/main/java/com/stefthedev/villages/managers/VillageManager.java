@@ -1,8 +1,5 @@
 package com.stefthedev.villages.managers;
-import com.stefthedev.villages.data.village.Village;
-import com.stefthedev.villages.data.village.VillageClaim;
-import com.stefthedev.villages.data.village.VillageMember;
-import com.stefthedev.villages.data.village.VillageRequest;
+import com.stefthedev.villages.data.village.*;
 import com.stefthedev.villages.utilities.general.Manager;
 import org.bukkit.Chunk;
 import org.bukkit.OfflinePlayer;
@@ -73,7 +70,6 @@ public class VillageManager extends Manager<Village> {
         }
         return null;
     }
-
     public VillageClaim getClaim(Village village, Chunk chunk) {
         for (VillageClaim villageClaim : village.getVillageClaims()) {
             if (chunkMatchesClaim(chunk, villageClaim)) {
@@ -101,12 +97,14 @@ public class VillageManager extends Manager<Village> {
                 value.replace("village.claims.", "")).forEach(value -> { max.set(-1);
             try {
                 if (Integer.parseInt(value) > max.get()) max.set(Integer.parseInt(value));
-            } catch (NumberFormatException ignored) {
-
-            }
+            } catch (NumberFormatException ignored) { max.set(0); }
         });
 
         return max.get();
+    }
+
+    public boolean checkPermission(VillagePermission villagePermission, Village village, Player player) {
+        return (!village.getMember(player.getUniqueId()).hasPermission(villagePermission) || !village.getOwner().equals(player.getUniqueId())) && !village.hasPermission(villagePermission);
     }
 
     private boolean chunkMatchesClaim(Chunk chunk, VillageClaim villageClaim) {
@@ -116,4 +114,5 @@ public class VillageManager extends Manager<Village> {
     public Set<VillageRequest> getRequests() {
         return Collections.unmodifiableSet(villageRequests);
     }
+
 }

@@ -33,13 +33,16 @@ public class PermissionsMenu extends Menu {
     @Override
     public Menu build() {
         AtomicInteger atomicInteger = new AtomicInteger(-1);
-        Arrays.asList(VillagePermission.values()).forEach(villagePermission -> {
-            if (villageMember.hasPermission(villagePermission)) {
-                addItems(new MenuItem(atomicInteger.addAndGet(1), enabled(villagePermission), event-> villageMember.remove(villagePermission)));
-            } else {
-                addItems(new MenuItem(atomicInteger.addAndGet(1), disabled(villagePermission), event-> villageMember.add(villagePermission)));
-            }
-        });
+        Arrays.asList(VillagePermission.values()).forEach(villagePermission -> addItems(new MenuItem(atomicInteger.addAndGet(1),
+                permission(villagePermission, villageMember.hasPermission(villagePermission)),
+                event-> {
+                    if(villageMember.hasPermission(villagePermission)) {
+                        villageMember.remove(villagePermission);
+                    } else {
+                        villageMember.add(villagePermission);
+                    }
+                })
+        ));
         addItems(new MenuItem(31, back(), inventoryClickEvent ->
         {
             inventoryClickEvent.getWhoClicked().closeInventory();
@@ -48,20 +51,18 @@ public class PermissionsMenu extends Menu {
         return this;
     }
 
-    private ItemStack disabled(VillagePermission villagePermission) {
-        return new Item()
-                .material(Material.GRAY_DYE)
-                .name(Message.MENU_DISABLED_TITLE.toString().replace("{0}", villagePermission.name()))
-                .lore(Message.MENU_DISABLED_LORE.toList())
-                .build();
-    }
-
-    private ItemStack enabled(VillagePermission villagePermission) {
-        return new Item()
-                .material(Material.LIME_DYE)
-                .name(Message.MENU_ENABLED_TITLE.toString().replace("{0}", villagePermission.name()))
-                .lore(Message.MENU_ENABLED_LORE.toList())
-                .build();
+    private ItemStack permission(VillagePermission villagePermission, boolean enabled) {
+        Item item = new Item();
+        if(enabled) {
+            item.material(Material.LIME_DYE);
+            item.name(Message.MENU_ENABLED_TITLE.toString().replace("{0}", villagePermission.name()));
+            item.lore(Message.MENU_ENABLED_LORE.toList());
+        } else {
+            item.material(Material.GRAY_DYE);
+            item.name(Message.MENU_DISABLED_TITLE.toString().replace("{0}", villagePermission.name()));
+            item.lore(Message.MENU_DISABLED_LORE.toList());
+        }
+        return item.build();
     }
 
     private ItemStack back() {

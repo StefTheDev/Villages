@@ -35,19 +35,16 @@ public class PanelMenu extends Menu {
     public Menu build() {
 
         addItems(
-                new MenuItem(11, members(), inventoryClickEvent -> new MembersMenu(getPlugin(), villageManager, village, 1).build().open((Player) inventoryClickEvent.getWhoClicked())),
-                new MenuItem(12, claims(), inventoryClickEvent -> new ClaimsMenu(getPlugin(), villageManager, village, 1).build().open((Player) inventoryClickEvent.getWhoClicked())),
-                new MenuItem(13, information(), null),
-                new MenuItem(14, home(), inventoryClickEvent -> {
-                    Player player = (Player) inventoryClickEvent.getWhoClicked();
-                    player.closeInventory();
-                    VillageMember villageMember = village.getMember(player.getUniqueId());
-                    if(villageMember.hasPermission(VillagePermission.HOME) || village.getOwner().equals(player.getUniqueId())) {
-                        player.teleport(village.getVillageLocation().toLocation(getPlugin()));
-                        player.sendMessage(Chat.format(Message.VILLAGE_HOME.toString()));
-                    } else {
-                        player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.HOME.name() )));
-                    }
+                new MenuItem(10, members(), inventoryClickEvent -> new MembersMenu(getPlugin(), villageManager, village, 1).build().open((Player) inventoryClickEvent.getWhoClicked())),
+                new MenuItem(11, claims(), inventoryClickEvent -> new ClaimsMenu(getPlugin(), villageManager, village, 1).build().open((Player) inventoryClickEvent.getWhoClicked())),
+                new MenuItem(12, information(), null),
+                new MenuItem(13, globalPermissions(), inventoryClickEvent -> new GlobalPermissionsMenu(getPlugin(), village, villageManager).build().open((Player) inventoryClickEvent.getWhoClicked())),
+                new MenuItem(14, peaceful(village.isPeaceful()), inventoryClickEvent -> {
+                   if(village.isPeaceful()) {
+                       village.setPeaceful(false);
+                   } else{
+                       village.setPeaceful(true);
+                   }
                 }),
                 new MenuItem(15, disband(), inventoryClickEvent -> {
                     Player player = (Player) inventoryClickEvent.getWhoClicked();
@@ -107,11 +104,11 @@ public class PanelMenu extends Menu {
                 .build();
     }
 
-    private ItemStack home() {
+    private ItemStack globalPermissions() {
         return new Item()
                 .material(Material.NETHER_STAR)
-                .name(Message.MENU_HOME_TITLE.toString())
-                .lore(Message.MENU_HOME_LORE.toList())
+                .name(Message.MENU_GLOBAL_PERMISSIONS_TITLE.toString())
+                .lore(Message.MENU_GLOBAL_PERMISSIONS_LORE.toList())
                 .build();
     }
 
@@ -122,4 +119,19 @@ public class PanelMenu extends Menu {
                 .lore(Message.MENU_DISBAND_LORE.toList())
                 .build();
     }
+
+    private ItemStack peaceful(boolean enabled) {
+        Item item = new Item();
+        if(enabled) {
+            item.material(Material.LIME_DYE);
+            item.name(Message.MENU_PEACEFUL_ENABLED_TITLE.toString());
+            item.lore(Message.MENU_PEACEFUL_ENABLED_LORE.toList());
+        } else {
+            item.material(Material.GRAY_DYE);
+            item.name(Message.MENU_PEACEFUL_DISABLED_TITLE.toString());
+            item.lore(Message.MENU_PEACEFUL_DISABLED_LORE.toList());
+        }
+        return item.build();
+    }
+
 }

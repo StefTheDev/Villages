@@ -27,7 +27,7 @@ public class PanelCommand extends Command {
         Village village = villageManager.getVillage(player);
         if(village != null) {
             VillageMember villageMember = village.getMember(player.getUniqueId());
-            if(villageMember.hasPermission(VillagePermission.PANEL) || village.getOwner().equals(player.getUniqueId())) {
+            if(villageMember.hasPermission(VillagePermission.PANEL) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.PANEL)) {
                 new PanelMenu(villages, villageManager, village).build().open(player);
             } else {
                 player.sendMessage(Chat.format(Message.NO_PERMISSION.toString().replace("{0}", VillagePermission.PANEL.name() )));

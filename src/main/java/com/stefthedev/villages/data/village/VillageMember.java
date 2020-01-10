@@ -4,12 +4,25 @@ import java.util.*;
 
 public class VillageMember {
 
+    private long cooldown = 0;
     private final UUID uuid;
     private final List<VillagePermission> villagePermissions;
 
     public VillageMember(UUID uuid) {
         this.uuid = uuid;
         this.villagePermissions = new ArrayList<>();
+    }
+
+    public void setCooldown(long time) {
+        this.cooldown = System.currentTimeMillis() + (time * 1000);
+    }
+
+    public boolean hasCooldown() {
+        return (cooldown > System.currentTimeMillis());
+    }
+
+    public long getCooldown() {
+        return cooldown;
     }
 
     public void add(VillagePermission villagePermission) {

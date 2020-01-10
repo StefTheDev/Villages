@@ -68,11 +68,10 @@ public class VillageListener implements Listener {
         Village currentVillage = villageManager.getVillage(block.getChunk());
         if (currentVillage == null) return;
 
-        Village playerVillager = villageManager.getVillage(player);
+        Village playerVillage = villageManager.getVillage(player);
 
-        if (playerVillager == currentVillage) {
-            if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BLOCK_BREAK) &&
-                    !playerVillager.getOwner().equals(player.getUniqueId())) event.setCancelled(true);
+        if (playerVillage == currentVillage) {
+            if(villageManager.checkPermission(VillagePermission.BLOCK_BREAK, playerVillage, player)) event.setCancelled(true);
         } else {
             event.setCancelled(true);
         }
@@ -86,13 +85,13 @@ public class VillageListener implements Listener {
         Village currentVillage = villageManager.getVillage(block.getChunk());
         if (currentVillage == null) return;
 
-        Village playerVillager = villageManager.getVillage(player);
+        Village playerVillage = villageManager.getVillage(player);
 
-        if (playerVillager == currentVillage) {
-            if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BLOCK_PLACE) &&
-                    !playerVillager.getOwner().equals(player.getUniqueId())) event.setCancelled(true);
+        if (playerVillage == currentVillage) {
+            if(villageManager.checkPermission(VillagePermission.BLOCK_PLACE, playerVillage, player)) event.setCancelled(true);
         } else {
             event.setCancelled(true);
         }
     }
+
 }

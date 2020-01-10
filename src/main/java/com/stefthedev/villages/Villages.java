@@ -1,8 +1,6 @@
 package com.stefthedev.villages;
 
 import com.google.gson.reflect.TypeToken;
-import com.stefthedev.villages.data.settings.Setting;
-import com.stefthedev.villages.data.settings.SettingType;
 import com.stefthedev.villages.managers.SettingsManager;
 import com.stefthedev.villages.resources.commands.VillageCommand;
 import com.stefthedev.villages.resources.commands.subcommands.*;
@@ -15,11 +13,11 @@ import com.stefthedev.villages.utilities.general.Message;
 import com.stefthedev.villages.utilities.storage.YAML;
 import com.stefthedev.villages.data.village.Village;
 import com.stefthedev.villages.managers.VillageManager;
-import org.bukkit.World;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Villages extends JavaPlugin {
 
@@ -29,23 +27,20 @@ public class Villages extends JavaPlugin {
     private boolean worldGuard = false;
 
     public void onEnable() {
-        registerMessages(new YAML(this, "messages"));
-
+        getLogger().info("Loading Village Data.");
         villageManager = new VillageManager(this);
         villageManager.load(new TypeToken<Set<Village>>(){}.getType());
 
+        getLogger().info("Loading Settings.");
         settingsManager = new SettingsManager(this, new YAML(this, "settings"));
         settingsManager.load();
 
-        for(World world : getServer().getWorlds()) {
-            getLogger().info(world.getName());
-        }
-
+        registerMessages(new YAML(this, "messages"));
         VillageCommand villageCommand = new VillageCommand(this);
         villageCommand.initialise(
                 new AcceptCommand(villageManager),
                 new ClaimCommand(this),
-                new CreateCommand(villageManager),
+                new CreateCommand(this),
                 new DenyCommand(villageManager),
                 new DisbandCommand(villageManager),
                 new HelpCommand(villageCommand),
@@ -54,51 +49,68 @@ public class Villages extends JavaPlugin {
                 new KickCommand(villageManager),
                 new LeaveCommand(villageManager),
                 new PanelCommand(this),
+                new RenameCommand(villageManager),
                 new SetDescriptionCommand(villageManager),
                 new SetHomeCommand(villageManager),
                 new SetOwnerCommand( villageManager),
                 new UnClaimCommand(villageManager)
         );
 
+        getLogger().info("Registered " + villageCommand.getCommands().size() + " sub-command(s).");
+
         Objects.requireNonNull(getCommand(villageCommand.toString())).setExecutor(villageCommand);
-        registerListeners(
+
+        getLogger().info("Registered " + registerListeners(
                 new EntityListener(this),
                 new PlayerListener(this),
                 new VillageListener(this),
                 new WorldListener(villageManager)
-        );
+        ) + " listener(s).");
 
-        registerHooks();
+        getLogger().info("Registered " + registerHooks() + " hook(s).");
     }
 
-    private void registerListeners(Listener... listeners) {
-        Arrays.asList(listeners).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    private int registerListeners(Listener... listeners) {
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        Arrays.asList(listeners).forEach(listener -> {
+            atomicInteger.getAndAdd(1);
+            getServer().getPluginManager().registerEvents(listener, this);
+        });
+        return atomicInteger.get();
     }
 
     private void registerMessages(YAML yaml) {
         yaml.setup();
         Message.setConfiguration(yaml.getFileConfiguration());
+
+        int index = 0;
         for (Message message : Message.values()) {
             if (message.getList() != null) {
                 yaml.getFileConfiguration().set(message.getPath(), message.getList());
             } else {
+                index += 1;
                 yaml.getFileConfiguration().set(message.getPath(), message.getDef());
             }
         }
         yaml.save();
+        getLogger().info("Registered " + index + " message(s).");
     }
 
 
-    private void registerHooks() {
+    private int registerHooks() {
+        int index = 0;
         if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             getLogger().info("Successfully hooked into PlaceholderAPI.");
             new PlaceholderAPIHook(this).register();
+            index += 1;
         }
 
         if(getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             getLogger().info("Successfully hooked into WorldGuard.");
             worldGuard = true;
+            index += 1;
         }
+        return index;
     }
 
     public void onDisable() {

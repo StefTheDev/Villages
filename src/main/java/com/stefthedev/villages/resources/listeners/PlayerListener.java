@@ -25,7 +25,7 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onFurnaceInteract(PlayerInteractEvent event) {
+    public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if(player.isOp()) return;
 
@@ -35,70 +35,68 @@ public class PlayerListener implements Listener {
         Village currentVillage = villageManager.getVillage(block.getChunk());
         if(currentVillage == null) return;
 
-        Village playerVillager = villageManager.getVillage(player);
+        Village playerVillage = villageManager.getVillage(player);
 
         Material material = block.getType();
         if(material == Material.FURNACE) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.FURNACE_ACCESS)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.FURNACE_ACCESS, playerVillage, player)) event.setCancelled(true);
+            } else {
+                event.setCancelled(true);
+            }
+        }
+
+        if(material == Material.BARREL) {
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.BARREL_ACCESS, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
         }
 
         if(material == Material.SHULKER_BOX) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.SHULKER_ACCESS)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.SHULKER_ACCESS, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
         }
 
-        if(material == Material.CHEST) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.CHEST_ACCESS)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+        if(material == Material.CHEST || material == Material.TRAPPED_CHEST) {
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.CHEST_ACCESS, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
         }
 
-        if(material == Material.HOPPER) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BREWING_ACCESS)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+        if(material == Material.HOPPER || material == Material.DISPENSER || material == Material.DROPPER) {
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.RESTONE_INVENTORY_ACCESS, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
         }
 
         if(material == Material.BREWING_STAND) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.BREWING_ACCESS)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.BREWING_ACCESS, playerVillage, player)) event.setCancelled(true);
+            } else {
+                event.setCancelled(true);
+            }
+        }
+
+        if(material == Material.ANVIL || material == Material.CHIPPED_ANVIL || material == Material.DAMAGED_ANVIL) {
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.ANVIL_ACCESS, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
         }
 
         if(material == Material.DRAGON_EGG) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.DRAGON_EGG_TOUCH)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.DRAGON_EGG_TOUCH, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
@@ -114,26 +112,20 @@ public class PlayerListener implements Listener {
         Village currentVillage = villageManager.getVillage(block.getChunk());
         if(currentVillage == null) return;
 
-        Village playerVillager = villageManager.getVillage(player);
+        Village playerVillage = villageManager.getVillage(player);
 
         Material material = event.getBucket();
-        if(material == Material.WATER_BUCKET) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.WATER_PLACEMENT)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+        if(material == Material.WATER_BUCKET || material == Material.PUFFERFISH_BUCKET || material == Material.TROPICAL_FISH_BUCKET || material == Material.SALMON_BUCKET) {
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.WATER_PLACEMENT, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
         }
 
         if(material == Material.LAVA_BUCKET) {
-            if (playerVillager == currentVillage) {
-                if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.LAVA_PLACEMENT)
-                        && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
+            if (playerVillage == currentVillage) {
+                if(villageManager.checkPermission(VillagePermission.LAVA_PLACEMENT, playerVillage, player)) event.setCancelled(true);
             } else {
                 event.setCancelled(true);
             }
@@ -148,13 +140,10 @@ public class PlayerListener implements Listener {
         Village currentVillage = villageManager.getVillage(armorStand.getLocation().getChunk());
         if (currentVillage == null) return;
 
-        Village playerVillager = villageManager.getVillage(player);
+        Village playerVillage = villageManager.getVillage(player);
 
-        if (playerVillager == currentVillage) {
-            if (!playerVillager.getMember(player.getUniqueId()).hasPermission(VillagePermission.ARMOR_STAND_ACCESS)
-                    && !playerVillager.getOwner().equals(player.getUniqueId())) {
-                event.setCancelled(true);
-            }
+        if (playerVillage == currentVillage) {
+            if(villageManager.checkPermission(VillagePermission.ARMOR_STAND_ACCESS, playerVillage, player)) event.setCancelled(true);
         } else {
             event.setCancelled(true);
         }

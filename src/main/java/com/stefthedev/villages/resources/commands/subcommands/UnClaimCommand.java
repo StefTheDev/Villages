@@ -8,6 +8,7 @@ import com.stefthedev.villages.managers.VillageManager;
 import com.stefthedev.villages.utilities.general.Chat;
 import com.stefthedev.villages.utilities.general.Command;
 import com.stefthedev.villages.utilities.general.Message;
+import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
 public class UnClaimCommand extends Command {
@@ -24,7 +25,7 @@ public class UnClaimCommand extends Command {
         Village village = villageManager.getVillage(player);
         if(village != null) {
             VillageMember villageMember = village.getMember(player.getUniqueId());
-            if(villageMember.hasPermission(VillagePermission.UNCLAIM_LAND) || village.getOwner().equals(player.getUniqueId())) {
+            if(villageMember.hasPermission(VillagePermission.UNCLAIM_LAND) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.UNCLAIM_LAND)) {
                 Village tempVillage = villageManager.getVillage(player.getLocation().getChunk());
                 if(tempVillage == village) {
                     if(village.getVillageClaims().size() > 1) {

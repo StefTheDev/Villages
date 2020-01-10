@@ -6,7 +6,7 @@
 
     <groupId>com.stefthedev.villages</groupId>
     <artifactId>Villages</artifactId>
-    <version>BETA-5.4</version>
+    <version>BETA-5.5</version>
     <build>
         <plugins>
             <plugin>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.1-R0.1-SNAPSHOT</version>
+            <version>1.15-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

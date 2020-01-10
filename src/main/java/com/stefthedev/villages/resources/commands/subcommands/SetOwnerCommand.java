@@ -45,7 +45,7 @@ public class SetOwnerCommand extends Command {
                 player.sendMessage(Chat.format(Message.VILLAGE_NULL.toString()));
             }
         } else {
-            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village" + getUsage())));
+            player.sendMessage(Chat.format(Message.USAGE.toString().replace("{0}", "/village " + getUsage())));
         }
         return false;
     }

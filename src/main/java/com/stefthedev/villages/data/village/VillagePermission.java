@@ -1,7 +1,9 @@
 package com.stefthedev.villages.data.village;
 
 public enum VillagePermission {
+    ANVIL_ACCESS,
     ARMOR_STAND_ACCESS,
+    BARREL_ACCESS,
     BLOCK_BREAK,
     BLOCK_PLACE,
     BREWING_ACCESS,
@@ -13,10 +15,12 @@ public enum VillagePermission {
     EDIT_PERMISSIONS,
     FURNACE_ACCESS,
     HOME,
+    RESTONE_INVENTORY_ACCESS,
     INVITE_MEMBER,
     KICK_MEMBER,
     LAVA_PLACEMENT,
     PANEL,
+    RENAME_VILLAGE,
     SET_DESCRIPTION,
     SET_HOME,
     SHULKER_ACCESS,

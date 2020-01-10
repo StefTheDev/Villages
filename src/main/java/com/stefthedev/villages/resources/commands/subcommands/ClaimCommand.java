@@ -34,7 +34,7 @@ public class ClaimCommand extends Command {
         Village village = villageManager.getVillage(player);
         if (village != null) {
             VillageMember villageMember = village.getMember(player.getUniqueId());
-            if (villageMember.hasPermission(VillagePermission.CLAIM_LAND) || village.getOwner().equals(player.getUniqueId())) {
+            if (villageMember.hasPermission(VillagePermission.CLAIM_LAND) || village.getOwner().equals(player.getUniqueId()) || village.hasPermission(VillagePermission.CLAIM_LAND)) {
                 Chunk chunk = player.getLocation().getChunk();
                 Village tempVillage = villageManager.getVillage(chunk);
                 if (tempVillage == null) {
@@ -43,7 +43,7 @@ public class ClaimCommand extends Command {
                     if(village.getVillageClaims().size() < claimLimit || village.getVillageClaims().size() < claimLimit + defaultClaimLimit) {
                         if(villages.isWorldGuard()) {
                             if(new WorldGuardHook().isRegion(player)) {
-                                player.sendMessage(Chat.format(Message.WORLDGUARD.toString()));
+                                player.sendMessage(Chat.format(Message.WORLDGUARD_CLAIM.toString()));
                                 return true;
                             }
                         }

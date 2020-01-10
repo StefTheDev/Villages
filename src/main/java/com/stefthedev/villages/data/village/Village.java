@@ -6,14 +6,14 @@ import java.util.*;
 
 public class Village {
 
-    private final String name;
-
-    private String description;
+    private String name, description;
+    private boolean peaceful;
     private int level;
     private UUID owner;
 
     private final Set<VillageMember> villageMembers;
     private final Set<VillageClaim> villageClaims;
+    private final Set<VillagePermission> villagePermissions;
 
     private VillageLocation villageLocation;
 
@@ -24,6 +24,7 @@ public class Village {
 
         this.villageMembers = new HashSet<>();
         this.villageClaims = new HashSet<>();
+        this.villagePermissions = new HashSet<>();
     }
 
     public void add(int level) {
@@ -38,6 +39,10 @@ public class Village {
         villageClaims.add(villageClaim);
     }
 
+    public void add(VillagePermission villagePermission) {
+        villagePermissions.add(villagePermission);
+    }
+
     public void remove(VillageMember villageMember) {
         villageMembers.remove(villageMember);
     }
@@ -46,12 +51,24 @@ public class Village {
         villageClaims.remove(villageClaim);
     }
 
+    public void remove(VillagePermission villagePermission) {
+        villagePermissions.remove(villagePermission);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     public void setOwner(UUID owner) {
         this.owner = owner;
+    }
+
+    public void setPeaceful(boolean peaceful) {
+        this.peaceful = peaceful;
     }
 
     public void setLocation(Location location) {
@@ -74,13 +91,20 @@ public class Village {
         return null;
     }
 
+    public boolean hasPermission(VillagePermission villagePermission) {
+        return villagePermissions.contains(villagePermission);
+    }
+
     public String getName() {
         return name;
     }
 
     public String getDescription() {
-        if(description == null)  description = "A peaceful settlement.";
         return description;
+    }
+
+    public boolean isPeaceful() {
+        return peaceful;
     }
 
     public int getLevel() {
