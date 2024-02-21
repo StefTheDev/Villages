@@ -81,7 +81,7 @@ Since villages is still in ALPHA we are still working hard on releasing more fea
 
 If you have any issues or concerns in regards to the plugin feel free to message me on these platforms:
 
-There is a discord server available if you need quick and reliable support: DISCORD
+There is a discord server available if you need quick and reliable support: [DISCORD](https://discord.gg/AymHuvNMbs)
 Are you willing to test the settlement plugin? Join the testing server: 51.161.91.201:25610
 
 Now managed by HuskyDreaming!
