@@ -1,9 +1,7 @@
-![alt text](https://proxy.spigotmc.org/1998f98e51685efd529a2e95ace9d3f3de88e8b4?url=https%3A%2F%2Fi.imgur.com%2FoqVaPoF.jpg)
-
-
 # Villages
 Villages is a unique and simple land claiming plugin that allows you to group up with members to build on your survival world.
 
+NOTE VILLAGES HAS NOW BEEN MOVED TO A BRAND NEW PLUGIN: https://www.spigotmc.org/resources/settlements.115101/
 
 ## Features
 
@@ -82,9 +80,8 @@ Since villages is still in ALPHA we are still working hard on releasing more fea
 ## Support
 
 If you have any issues or concerns in regards to the plugin feel free to message me on these platforms:
-- **Discord:** Stef#0001
-- **Spigot:** StefTheDev
 
-No issues or bugs have been found at this stage.
+There is a discord server available if you need quick and reliable support: DISCORD
+Are you willing to test the settlement plugin? Join the testing server: 51.161.91.201:25610
 
-
+Now managed by HuskyDreaming!
